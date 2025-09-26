@@ -8,16 +8,7 @@ export function useCourses() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchCourses() {
-      try {
-        const response = await sdk.client.get<{ courses: Course[] }>(
-          "/courses"
-        );
-        setCourses(response.data.courses);
-      } catch (error: any) {
-        setError(error?.message ?? "Failed to fetch courses");
-      }
-    }
+    async function fetchCourses() {}
 
     fetchCourses();
   }, [sdk]);
