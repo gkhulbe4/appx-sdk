@@ -1,48 +1,15 @@
-import axios, { type AxiosInstance } from "axios";
+import { createClient } from "./client.js";
+import { UserApi } from "./user.js";
+import { CoursesApi } from "./courses.js";
+import type { AppxSdkOptions } from "../types/appxTypes.js";
 
 export class AppxSdk {
-  client: AxiosInstance;
+  public user: UserApi;
+  public courses: CoursesApi;
 
-  constructor(baseUrl: string) {
-    this.client = axios.create({ baseURL: baseUrl });
-  }
-
-  async signup(email: string, password: string) {
-    const { data } = await this.client.post("/auth/signup", {
-      email,
-      password,
-    });
-    return data;
-  }
-
-  async loginWithPass(email: string, password: string) {
-    if (!password) throw new Error("Password is required for loginWithPass");
-    try {
-      const { data } = await this.client.post("/auth/login/pass", {
-        email,
-        password,
-      });
-      return data;
-    } catch (error: any) {
-      throw new Error(error?.message || "Login with password failed");
-    }
-  }
-
-  async loginWithOtp(email: string) {
-    try {
-      const { data } = await this.client.post("/auth/login/otp", { email });
-      return data;
-    } catch (error: any) {
-      throw new Error(error?.message || "Login with OTP failed");
-    }
-  }
-
-  async me() {
-    try {
-      const { data } = await this.client.get("/auth/me");
-      return data;
-    } catch (error: any) {
-      throw new Error(error?.message || "Failed to fetch current user");
-    }
+  constructor(options: AppxSdkOptions) {
+    const client = createClient(options.baseUrl, options.getToken);
+    this.user = new UserApi(client);
+    this.courses = new CoursesApi(client);
   }
 }

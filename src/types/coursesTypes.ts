@@ -1,0 +1,167 @@
+export type Course = {
+  id: string;
+  title: string;
+  originalPrice: string;
+  discountedPrice: string;
+  discountPercentage: string;
+};
+
+export type CourseDetails = {
+  id: string;
+  is_sebi_flow_enabled: string;
+
+  // expanded fields
+  access_requested: number;
+  allow_payment: string;
+  bharat_emi_price: number;
+  book: string | null;
+  book_compulsory: string;
+  book_id: string;
+  categories: string;
+  course_demo_pdf: string;
+  course_demo_video: string;
+  course_description: string;
+  course_feature_1: string;
+  course_feature_2: string;
+  course_feature_3: string;
+  course_feature_4: string;
+  course_feature_5: string;
+  course_name: string;
+  course_slug: string;
+  course_thumbnail: string;
+  currency: string;
+  disable_discount_code: string;
+  disable_invoice: string;
+  enable: string;
+  enable_broker_purchase: string;
+  enable_download: string;
+  enable_international_pricing: string;
+  enable_rich_snippets: string;
+  enable_tabs_control: string;
+  end_date: string;
+  exam_category: string;
+  exam_logo: string;
+  exam_name: string;
+  expiryDate: string;
+  expiry_mode: string;
+  extended_validity: string;
+  extended_validity_price: string;
+  featured_discounts: any[]; // expand if known
+  files_count: number;
+  folder_wise_course: number;
+  gif_display: string;
+  images_count: number;
+  installment_price: number;
+  installmentplan: any[]; // expand if known
+  is_aadhar_mandatory: string;
+  is_combo: number;
+  is_doubts_attached: string;
+  is_featured: string;
+  is_groupchat_enabled: string;
+  is_paid: number;
+  is_tgconnect_enabled: number;
+  jsonld_schema: string;
+  language: string;
+  likes_count: string;
+  live_class_count: number;
+  meta_description: string;
+  meta_title: string;
+  mrp: string;
+  noofinstallment: string;
+  parent_id: string;
+  pdf_count: number;
+  perinstallment_validity: string;
+  perinstallment_validity_type: string;
+  price: string;
+  price_kicker: string;
+  price_without_gst: string;
+  pricing_plans: any[];
+  quiz_count: number;
+  seats: number;
+
+  sebi_details: {
+    consent_type: string;
+    pan_verification_mode: string;
+    aadhar_consent_price: string;
+    aadhar_inclusive: string;
+    pan_inclusive: string;
+    pan_verification_price: string;
+  };
+
+  show_all_doubts_tab: string;
+  show_content_tab: string;
+  show_demo_tab: string;
+  show_feed_tab: string;
+  show_live_upcoming_tab: string;
+  show_my_doubts_tab: string;
+  show_quiz_tab: string;
+  show_telegram_tab: string;
+  show_test_tab: string;
+  show_web_tab: string;
+  showemipay: number;
+  small_course_logo: string;
+  start_date: string;
+  study_material: string | null;
+  study_material_compulsory: number;
+  study_material_id: number;
+  sub_exam_category: string;
+  subscription_flag: string;
+  subscription_plans: any[];
+  teacher_id: number;
+  teacher_image: string;
+  teacher_name: string;
+  test_count: number;
+  test_pass_compulsory: string;
+  test_series_id: string;
+  tests_count: number;
+  tg_channel_name: string;
+  type: string;
+  uhs_price: string;
+  upsell_items: any[];
+  validity: string;
+  validity_type: string;
+  video_count: number;
+  videos_count: number;
+  view_in_web: string;
+  vod_courses: string;
+};
+
+export type PurchasedCourse = {
+  purchaseid: string;
+  invoice_url: string;
+  is_invoice_signed: string; // "0" | "1"
+  download_link: string;
+  certificate_url: string;
+  coursedt: CourseDetails[]; // full course details
+  datetime: string; // "YYYY-MM-DD HH:mm:ss"
+  enddatetime: string; // "YYYY-MM-DD"
+  folder_wise_course: number;
+  is_already_expired: number; // 0 | 1
+  itemid: string;
+  itemtype: string;
+  itemtypeid: number;
+  purchaseStrToTime: number;
+  transactionid: string;
+};
+
+export type UserPurchasesResponse = {
+  status: number;
+  msg: string;
+  message: string;
+  data: PurchasedCourse[];
+};
+
+export type WebSliderItem = {
+  id: string;
+  image_link: string;
+  connected_link: string;
+  app_category: string;
+  sortingparam: string;
+  deleted: string;
+};
+
+export type WebSliderResponse = {
+  message: string;
+  status: number;
+  data: WebSliderItem[];
+};
