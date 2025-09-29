@@ -1,6 +1,8 @@
 import type { AxiosInstance } from "axios";
 import type {
   Course,
+  CurrencyRates,
+  FolderContentsResponse,
   UserPurchasesResponse,
   WebSliderResponse,
 } from "../types/coursesTypes.js";
@@ -44,6 +46,35 @@ export class CoursesApi {
       return data;
     } catch (err) {
       this.handleError(err, "Fetching web slider failed");
+    }
+  }
+
+  async getCurrency(
+    baseCurrency: string,
+    currencies: string
+  ): Promise<CurrencyRates> {
+    try {
+      const { data } = await this.client.get(
+        `get/get_currency_conversion?base_currency=${baseCurrency}&currencies=${currencies}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching currency failed");
+    }
+  }
+
+  async getFolderContents(
+    courseId: string,
+    parentId: string,
+    start: string
+  ): Promise<FolderContentsResponse> {
+    try {
+      const { data } = await this.client.get(
+        `get/folder_contentsv3?course_id=${courseId}&parent_id=${parentId}&start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching folder contents failed");
     }
   }
 }

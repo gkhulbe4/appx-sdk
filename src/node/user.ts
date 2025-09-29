@@ -83,6 +83,19 @@ export class UserApi {
     }
   }
 
+  async resendOtpWithCall(): Promise<{
+    data: string;
+    message: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.post("post/resend_otp_with_call");
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to resend OTP with call");
+    }
+  }
+
   async checkUserExists(email_or_phone: string): Promise<CheckUserExists> {
     try {
       const { data } = await this.client.get(
@@ -93,4 +106,6 @@ export class UserApi {
       this.handleError(err, "User check failed");
     }
   }
+
+  async getUserLikedItems() {}
 }
