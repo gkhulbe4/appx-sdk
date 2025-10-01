@@ -32,18 +32,18 @@ export type UserSignupResponse = {
   status: number;
   message: string;
   data: {
-    user_id?: number;
-    userid?: string;
-    username?: string;
-    name?: string;
-    email?: string;
-    mobile?: string;
-    phone?: string;
-    city?: string;
-    state?: string;
-    source?: string;
-    date_time?: string;
-    token?: string;
+    user_id: number;
+    userid: string;
+    username: string;
+    name: string;
+    email: string;
+    mobile: string;
+    phone: string;
+    city: string;
+    state: string;
+    source: string;
+    date_time: string;
+    token: string;
   } | null;
 };
 
