@@ -42,7 +42,7 @@ export class CoursesApi {
     }
   }
 
-  async getWebSliderCourses(): Promise<WebSliderResponse[]> {
+  async getWebSliderCourses(): Promise<WebSliderResponse> {
     try {
       const { data } = await this.client.get("get/web_slider?userid=1&start=0");
       return data;
