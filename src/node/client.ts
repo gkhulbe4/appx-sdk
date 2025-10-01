@@ -6,7 +6,7 @@ export function createClient(
 ): AxiosInstance {
   const client = axios.create({
     baseURL: baseUrl,
-    withCredentials: true,
+    // withCredentials: true,
     headers: {
       "auth-key": "appxapi",
       "client-service": "Appx",
