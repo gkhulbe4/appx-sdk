@@ -24,5 +24,16 @@
   },
   "peerDependencies": {
     "react": ">=18.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react/AppxProvider": "./dist/react/AppxProvider.js",
+    "./react/useAppx": "./dist/react/useAppx.js",
+    "./react/hooks/useNewCourses": "./dist/react/hooks/useNewCourses.js",
+    "./react/hooks/usePurchases": "./dist/react/hooks/usePurchases.js",
+    "./node/index": "./dist/node/index.js"
   }
 }
