@@ -24,14 +24,21 @@ export class UserApi {
     state: string
   ): Promise<UserSignupResponse> {
     try {
+      const formData = new FormData();
+      formData.append("source", "website");
+      formData.append("name", fullName);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("password", password);
+      formData.append("state", state);
+      formData.append("username", "");
       const { data } = await this.client.post(
         "post/userSignup?extra_details=0",
+        formData,
         {
-          fullName,
-          email,
-          phone,
-          password,
-          state,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       return data;
@@ -45,9 +52,20 @@ export class UserApi {
     password: string
   ): Promise<UserLoginResponse> {
     try {
+      const formData = new FormData();
+      formData.append("source", "website");
+      formData.append("phone", email_or_phone);
+      formData.append("email", email_or_phone);
+      formData.append("password", password);
+      formData.append("extra_details", "1");
       const { data } = await this.client.post(
         "post/userLogin?extra_details=0",
-        { email_or_phone, password }
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       return data;
     } catch (err) {
