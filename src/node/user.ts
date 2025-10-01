@@ -99,7 +99,7 @@ export class UserApi {
   async checkUserExists(email_or_phone: string): Promise<CheckUserExists> {
     try {
       const { data } = await this.client.get(
-        `check_user_exist?email_or_phone=${email_or_phone}`
+        `get/check_user_exist?email_or_phone=${email_or_phone}`
       );
       return data;
     } catch (err) {
