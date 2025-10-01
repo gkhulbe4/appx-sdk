@@ -9,7 +9,7 @@ type UsePurchasesProps = {
 
 export function usePurchases({ userId, itemType }: UsePurchasesProps) {
   const { sdk } = useAppx();
-  const [purchases, setPurchases] = useState<UserPurchasesResponse[]>([]);
+  const [purchases, setPurchases] = useState<UserPurchasesResponse>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
