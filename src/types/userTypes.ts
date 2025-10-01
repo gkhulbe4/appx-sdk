@@ -1,7 +1,22 @@
-import type { CurrentUser } from "./appxTypes";
-
 export type UserLoginResponse = {
-  data: CurrentUser | null;
+  data: {
+    userid: string;
+    token: string;
+    email: string;
+    phone: string;
+    photo: string;
+    name: string;
+    username: string;
+    aadhar_status: string;
+    state: string;
+    info_1: string;
+    app_category: string;
+    is_tester: boolean;
+    gender: "male" | "female" | "other" | string;
+    height: string;
+    weight: string;
+    dob: string;
+  } | null;
   message: string;
   status: number;
 };
@@ -10,25 +25,25 @@ export type VerifyOtpResponse = {
   status: number;
   message: string;
   data: string;
-  user?: Partial<CurrentUser> & { is_blank: boolean };
+  user?: Partial<UserLoginResponse["data"]> & { is_blank: boolean };
 };
 
 export type UserSignupResponse = {
   status: number;
   message: string;
   data: {
-    user_id: number;
-    userid: string;
-    username: string;
-    name: string;
-    email: string;
-    mobile: string;
-    phone: string;
-    city: string;
-    state: string;
-    source: string;
-    date_time: string;
-    token: string;
+    user_id?: number;
+    userid?: string;
+    username?: string;
+    name?: string;
+    email?: string;
+    mobile?: string;
+    phone?: string;
+    city?: string;
+    state?: string;
+    source?: string;
+    date_time?: string;
+    token?: string;
   } | null;
 };
 
