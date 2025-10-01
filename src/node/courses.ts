@@ -7,7 +7,7 @@ import type {
   FolderContentsResponse,
   UserPurchasesResponse,
   WebSliderResponse,
-} from "../types/coursesTypes.js";
+} from "../types/coursesTypes";
 
 export class CoursesApi {
   constructor(private client: AxiosInstance) {}

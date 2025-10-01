@@ -4,7 +4,7 @@ import type {
   UserLoginResponse,
   UserSignupResponse,
   VerifyOtpResponse,
-} from "../types/userTypes.js";
+} from "../types/userTypes";
 
 export class UserApi {
   constructor(private client: AxiosInstance) {}

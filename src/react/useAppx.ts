@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { AppxContext } from "./AppxProvider.js";
-import type { AppxContextType } from "../types/appxTypes.js";
+import { AppxContext } from "./AppxProvider";
+import type { AppxContextType } from "../types/appxTypes";
 
 export function useAppx(): AppxContextType {
   const context = useContext(AppxContext);

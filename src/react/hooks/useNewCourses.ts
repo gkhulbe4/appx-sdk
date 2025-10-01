@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useAppx } from "../useAppx.js";
-import type { Course } from "../../types/coursesTypes.js";
+import { useAppx } from "../useAppx";
+import type { Course } from "../../types/coursesTypes";
 
 export function useNewCourses() {
   const { sdk } = useAppx();

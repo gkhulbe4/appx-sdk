@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import type { ReactNode } from "react";
-import { AppxSdk } from "../node/index.js";
-import type { AppxContextType, CurrentUser } from "../types/appxTypes.js";
+import { AppxSdk } from "../node/index";
+import type { AppxContextType, CurrentUser } from "../types/appxTypes";
 
 const AppxContext = createContext<AppxContextType | null>(null);
 

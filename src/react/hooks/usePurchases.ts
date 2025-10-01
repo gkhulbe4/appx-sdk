@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useAppx } from "../useAppx.js";
-import type { UserPurchasesResponse } from "../../types/coursesTypes.js";
+import { useAppx } from "../useAppx";
+import type { UserPurchasesResponse } from "../../types/coursesTypes";
 
 type UsePurchasesProps = {
   userId: string;

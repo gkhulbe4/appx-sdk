@@ -1,4 +1,4 @@
-import type { CurrentUser } from "./appxTypes.js";
+import type { CurrentUser } from "./appxTypes";
 
 export type UserLoginResponse = {
   data: CurrentUser | null;

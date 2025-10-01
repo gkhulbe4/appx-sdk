@@ -1,7 +1,7 @@
-import { createClient } from "./client.js";
-import { UserApi } from "./user.js";
-import { CoursesApi } from "./courses.js";
-import type { AppxSdkOptions } from "../types/appxTypes.js";
+import { createClient } from "./client";
+import { UserApi } from "./user";
+import { CoursesApi } from "./courses";
+import type { AppxSdkOptions } from "../types/appxTypes";
 
 export class AppxSdk {
   public user: UserApi;
