@@ -16,8 +16,13 @@ export function createClient(
 
   if (getToken) {
     client.interceptors.request.use((config) => {
-      const token = getToken();
-      if (token) config.headers.Authorization = `Bearer ${token}`;
+      const currentUser = localStorage.getItem("current_user");
+      if (currentUser) {
+        const parsed = JSON.parse(currentUser);
+        if (parsed.token) {
+          config.headers.Authorization = parsed.token;
+        }
+      }
       return config;
     });
   }
