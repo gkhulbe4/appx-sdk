@@ -1,7 +1,9 @@
 import type { AxiosInstance } from "axios";
 import type {
   Course,
+  CourseDetails,
   CurrencyRates,
+  FeaturedCoursesResponse,
   FolderContentsResponse,
   UserPurchasesResponse,
   WebSliderResponse,
@@ -77,4 +79,21 @@ export class CoursesApi {
       this.handleError(error, "Fetching folder contents failed");
     }
   }
+
+  async getFeaturedCourses(start: string): Promise<FeaturedCoursesResponse> {
+    try {
+      const { data } = await this.client.get(
+        `get/featuredcourselistnewv2?start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching featured courses failed");
+    }
+  }
 }
+
+// have
+// eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIyNDY4IiwiZW1haWwiOiJraHVsYmVnYXJ2aXQ0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTc1OTE3NzI3MiwidGVuYW50VHlwZSI6InVzZXIiLCJ0ZW5hbnROYW1lIjoiaGFya2lyYXRfZGIiLCJ0ZW5hbnRJZCI6IiIsImRpc3Bvc2FibGUiOmZhbHNlfQ.-Ccf94ID-cX9WP_8qQjtIu36Pgz9sWQLQGCEzggAJkY
+
+// don't have
+// eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjExMDQwMCIsImVtYWlsIjoiZ2Fydml0a2h1bGJlNEBnbWFpbC5jb20iLCJ0aW1lc3RhbXAiOjE3NTkyMTc2ODksInRlbmFudFR5cGUiOiJ1c2VyIiwidGVuYW50TmFtZSI6ImhhcmtpcmF0X2RiIiwidGVuYW50SWQiOiIiLCJkaXNwb3NhYmxlIjpmYWxzZX0.lCTPnEsj_HzZWwAbYbTG-qldCGUL4YQEt199j-BCJVg

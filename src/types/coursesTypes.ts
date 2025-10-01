@@ -297,3 +297,11 @@ export type FolderContentsResponse = {
   data: FolderContentItem[];
   total: number;
 };
+
+export type FeaturedCoursesResponse = {
+  message: string;
+  msg: string;
+  status: number;
+  total: number;
+  data: CourseDetails[];
+};
