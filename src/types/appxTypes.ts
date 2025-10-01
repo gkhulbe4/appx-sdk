@@ -13,11 +13,10 @@ export type AppxSdkOptions = {
 };
 
 export type CurrentUser = {
-  dob?: string;
-  email?: string;
-  name?: string;
-  phone?: string;
-  token?: string;
-  userid?: string;
-  username?: string;
+  email: string;
+  name: string;
+  phone: string;
+  token: string;
+  userid: string;
+  username: string;
 };
