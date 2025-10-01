@@ -34,12 +34,7 @@ export class UserApi {
       formData.append("username", "");
       const { data } = await this.client.post(
         "post/userSignup?extra_details=0",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        formData
       );
       return data;
     } catch (err) {
@@ -60,12 +55,7 @@ export class UserApi {
       formData.append("extra_details", "1");
       const { data } = await this.client.post(
         "post/userLogin?extra_details=0",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        formData
       );
       return data;
     } catch (err) {

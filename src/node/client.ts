@@ -7,7 +7,9 @@ export function createClient(
   const client = axios.create({
     baseURL: baseUrl,
     headers: {
-      "Content-Type": "application/json",
+      "auth-key": "appxapi",
+      "client-service": "Appx",
+      source: "website",
     },
   });
 
