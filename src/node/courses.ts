@@ -31,7 +31,7 @@ export class CoursesApi {
   async getPurchasedCourses(
     userId: string,
     itemType: string
-  ): Promise<UserPurchasesResponse[]> {
+  ): Promise<UserPurchasesResponse> {
     try {
       const { data } = await this.client.get(
         `get/get_all_purchases?userid=${userId}&item_type=${itemType}`
