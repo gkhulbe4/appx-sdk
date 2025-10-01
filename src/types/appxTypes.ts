@@ -13,7 +13,7 @@ export type AppxSdkOptions = {
 };
 
 export type CurrentUser = {
-  aadhar_status: string;
+  aadhar_status?: string;
   app_category: string;
   dob: string;
   email: string;
@@ -29,4 +29,9 @@ export type CurrentUser = {
   userid: string;
   username: string;
   weight: string;
+  user_id?: number;
+  mobile?: string;
+  city?: string;
+  source?: string;
+  date_time?: string;
 };
