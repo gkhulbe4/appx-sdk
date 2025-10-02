@@ -8,7 +8,9 @@
   "scripts": {
     "build": "tsc",
     "prepare": "pnpm build",
-    "patch": "pnpm build && pnpm version patch && pnpm publish --access public"
+    "patch": "pnpm build && pnpm version patch && pnpm publish --access public",
+    "minor": "pnpm build && pnpm version minor && pnpm publish --access public",
+    "major": "pnpm build && pnpm version major && pnpm publish --access public"
   },
   "keywords": [],
   "author": "",
