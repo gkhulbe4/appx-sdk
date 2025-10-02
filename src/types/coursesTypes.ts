@@ -44,13 +44,13 @@ export type CourseDetails = {
   expiry_mode: string;
   extended_validity: string;
   extended_validity_price: string;
-  featured_discounts: any[]; // expand if known
+  featured_discounts: any[];
   files_count: number;
   folder_wise_course: number;
   gif_display: string;
   images_count: number;
   installment_price: number;
-  installmentplan: any[]; // expand if known
+  installmentplan: any[];
   is_aadhar_mandatory: string;
   is_combo: number;
   is_doubts_attached: string;
@@ -127,14 +127,14 @@ export type CourseDetails = {
 export type PurchasedCourse = {
   purchaseid: string;
   invoice_url: string;
-  is_invoice_signed: string; // "0" | "1"
+  is_invoice_signed: string;
   download_link: string;
   certificate_url: string;
-  coursedt: CourseDetails[]; // full course details
-  datetime: string; // "YYYY-MM-DD HH:mm:ss"
-  enddatetime: string; // "YYYY-MM-DD"
+  coursedt: CourseDetails[];
+  datetime: string;
+  enddatetime: string;
   folder_wise_course: number;
-  is_already_expired: number; // 0 | 1
+  is_already_expired: number;
   itemid: string;
   itemtype: string;
   itemtypeid: number;
@@ -203,99 +203,6 @@ export type CurrencyRates = {
   TRY: number;
   USD: number;
   ZAR: number;
-};
-
-export type FolderContentItem = {
-  id: string;
-  parent_id: string;
-  Title: string;
-  description: string;
-  hls_stream_type: string;
-  app_status: string;
-  chat_status: string;
-  concept: number;
-  cookie_key: string;
-  cookie_value: string;
-  course_id: string;
-  current_position: number;
-  date_and_time: string;
-  download_link: string;
-  download_link2: string;
-  download_links: string[];
-  download_url_higher_version: string;
-  download_url_lower_version: string;
-  duration: string;
-  embed_url: string;
-  enable_video_download: string;
-  enable_video_restrictions: number;
-  encrypted_links: string[];
-  event_date: string;
-  exam: string;
-  file_link: string;
-  files_count: string;
-  filter: string;
-  filter_name: string;
-  folder_wise_course: number;
-  free_flag: number;
-  images_count: string;
-  is_pdf2_encrypted: string;
-  is_pdf_encrypted: string;
-  is_premiere: string;
-  is_purchased: string;
-  iv_string: string;
-  links: string[];
-  live_quiz_id: number;
-  live_rewind_enable: string;
-  live_status: number;
-  live_type: string;
-  livestream_links: string[];
-  low_latency_enabled: boolean;
-  material_type: string;
-  max_time_allowed: string;
-  media_id: string;
-  meeting_id: string;
-  meeting_password: string;
-  open_outside_flag: string;
-  pdf2_encryption_key: string;
-  pdf2_encryption_version: string;
-  pdf_encryption_key: string;
-  pdf_encryption_version: string;
-  pdf_link: string;
-  pdf_link2: string;
-  quiz_count: string;
-  quiz_title_id: string;
-  rec_domain: string;
-  recording_hls: string;
-  recording_schedule: string | null;
-  recording_type: string;
-  save_flag: string;
-  section: number;
-  sortingparam: string;
-  special_course: string | null;
-  strtotime: number;
-  study_material_link: string;
-  subject: number;
-  test_title_id: string;
-  tests_count: string;
-  thumbnail: string;
-  topic: number;
-  uhs_version: string;
-  video_id: string;
-  video_key: string;
-  video_player_lower_url: string;
-  video_player_token: string;
-  video_player_url: string;
-  videos_count: string;
-  webdrm_links: string[];
-  ytFlag: number;
-  ytFlagWeb: number;
-};
-
-export type FolderContentsResponse = {
-  message: string;
-  status: number;
-  data: FolderContentItem[];
-  total: number;
 };
 
 export type FeaturedCoursesResponse = {

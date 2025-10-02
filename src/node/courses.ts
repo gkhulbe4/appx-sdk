@@ -4,10 +4,14 @@ import type {
   CourseDetails,
   CurrencyRates,
   FeaturedCoursesResponse,
-  FolderContentsResponse,
   UserPurchasesResponse,
   WebSliderResponse,
 } from "../types/coursesTypes";
+import {
+  FolderContentResponse,
+  ParentFolderResponse,
+  RootFolderContentResponse,
+} from "../types/folderTypes";
 
 export class CoursesApi {
   constructor(private client: AxiosInstance) {}
@@ -17,6 +21,22 @@ export class CoursesApi {
     const message =
       err.response?.data?.message || err.message || fallbackMessage;
     throw new Error(message);
+  }
+
+  async getCourse(courseId: string): Promise<{
+    message: string;
+    msg: string;
+    status: number;
+    data: CourseDetails[];
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `get/coursenew_by_idv2?id=${courseId}`
+      );
+      return data;
+    } catch (err) {
+      this.handleError(err, "Fetching course failed");
+    }
   }
 
   async getNewCourses(): Promise<Course[]> {
@@ -39,6 +59,17 @@ export class CoursesApi {
       return data;
     } catch (err) {
       this.handleError(err, "Fetching purchased courses failed");
+    }
+  }
+
+  async getFeaturedCourses(start: string): Promise<FeaturedCoursesResponse> {
+    try {
+      const { data } = await this.client.get(
+        `get/featuredcourselistnewv2?start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching featured courses failed");
     }
   }
 
@@ -65,11 +96,28 @@ export class CoursesApi {
     }
   }
 
+  // root folder contents
+  async getRootFolderContents(
+    courseId: string,
+    parentId: string | "-1",
+    windowsapp: string | "false",
+    start: string
+  ): Promise<RootFolderContentResponse> {
+    try {
+      const { data } = await this.client.get(
+        `https://harkiratapi.classx.co.in/get/folder_contentsv3?course_id=${courseId}&parent_id=${parentId}&windowsapp=${windowsapp}&start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching root folder contents failed");
+    }
+  }
+
   async getFolderContents(
     courseId: string,
     parentId: string,
     start: string
-  ): Promise<FolderContentsResponse> {
+  ): Promise<FolderContentResponse> {
     try {
       const { data } = await this.client.get(
         `get/folder_contentsv3?course_id=${courseId}&parent_id=${parentId}&start=${start}`
@@ -80,20 +128,17 @@ export class CoursesApi {
     }
   }
 
-  async getFeaturedCourses(start: string): Promise<FeaturedCoursesResponse> {
+  async getParentFolder(
+    courseId: string,
+    currentFolderId: string
+  ): Promise<ParentFolderResponse> {
     try {
       const { data } = await this.client.get(
-        `get/featuredcourselistnewv2?start=${start}`
+        `get/parent_folder_contents?course_id=${courseId}&current_folder_id=${currentFolderId}`
       );
       return data;
     } catch (error) {
-      this.handleError(error, "Fetching featured courses failed");
+      this.handleError(error, "Fetching parent folder failed");
     }
   }
 }
-
-// have
-// eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIyNDY4IiwiZW1haWwiOiJraHVsYmVnYXJ2aXQ0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTc1OTE3NzI3MiwidGVuYW50VHlwZSI6InVzZXIiLCJ0ZW5hbnROYW1lIjoiaGFya2lyYXRfZGIiLCJ0ZW5hbnRJZCI6IiIsImRpc3Bvc2FibGUiOmZhbHNlfQ.-Ccf94ID-cX9WP_8qQjtIu36Pgz9sWQLQGCEzggAJkY
-
-// don't have
-// eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjExMDQwMCIsImVtYWlsIjoiZ2Fydml0a2h1bGJlNEBnbWFpbC5jb20iLCJ0aW1lc3RhbXAiOjE3NTkyMTc2ODksInRlbmFudFR5cGUiOiJ1c2VyIiwidGVuYW50TmFtZSI6ImhhcmtpcmF0X2RiIiwidGVuYW50SWQiOiIiLCJkaXNwb3NhYmxlIjpmYWxzZX0.lCTPnEsj_HzZWwAbYbTG-qldCGUL4YQEt199j-BCJVg

@@ -7,3 +7,4 @@ export * from "./react/hooks/usePurchases";
 export type { AppxContextType, CurrentUser } from "./types/appxTypes";
 export * from "./types/coursesTypes";
 export * from "./types/userTypes";
+export * from "./types/folderTypes";
