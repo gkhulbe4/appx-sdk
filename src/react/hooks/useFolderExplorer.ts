@@ -27,8 +27,6 @@ export function useFolderExplorer(sdk: AppxSdk, courseId: string) {
   const [hasMore, setHasMore] = useState(true);
 
   const currentFolderId = breadcrumbs[breadcrumbs.length - 1]?.id;
-
-  // Load root folder
   useEffect(() => {
     if (!sdk || !courseId) return;
 
