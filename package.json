@@ -1,6 +1,6 @@
 {
   "name": "appx-sdk",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "Node + React SDK for Appx",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
