@@ -91,13 +91,22 @@ export class UserApi {
     }
   }
 
-  async resendOtpWithCall(): Promise<{
+  async resendOtpWithCall(
+    email_or_phone: string,
+    type: string | "text"
+  ): Promise<{
     data: string;
     message: string;
     status: number;
   }> {
     try {
-      const { data } = await this.client.post("post/resend_otp_with_call");
+      const formData = new FormData();
+      formData.append("mobile", email_or_phone);
+      formData.append("type", type);
+      const { data } = await this.client.post(
+        "post/resend_otp_with_call",
+        formData
+      );
       return data;
     } catch (error) {
       this.handleError(error, "Failed to resend OTP with call");

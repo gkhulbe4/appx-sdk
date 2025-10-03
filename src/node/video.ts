@@ -110,3 +110,26 @@ export class VideoApi {
     }
   }
 }
+
+// curl 'https://tempapi.appx.co.in/get/folder_courses?start=0&parent_id=-1' \
+//   -H 'accept: */*' \
+//   -H 'accept-language: en-US,en;q=0.9,bn;q=0.8,nl;q=0.7' \
+//   -H 'auth-key: appxapi' \
+//   -H 'authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjM2OTk2IiwiZW1haWwiOiJtb2hpdGdvdXR0YW1AZ21haWwuY29tIiwidGltZXN0YW1wIjoxNzU4MTgxMTI4LCJ0ZW5hbnRUeXBlIjoidXNlciIsInRlbmFudE5hbWUiOiJ0ZW1wX2RiIiwidGVuYW50SWQiOiIiLCJkaXNwb3NhYmxlIjpmYWxzZX0.jqAd6dFkGQGxo0qT979ZUTsoG7mMSc1yeou8tjOIAXI' \
+//   -H 'cache-control: no-cache' \
+//   -H 'client-service: Appx' \
+//   -H 'device-type;' \
+//   -H 'origin: https://tempnewwebsite.classx.co.in' \
+//   -H 'pragma: no-cache' \
+//   -H 'priority: u=1, i' \
+//   -H 'referer: https://tempnewwebsite.classx.co.in/' \
+//   -H 'sec-ch-ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"' \
+//   -H 'sec-ch-ua-mobile: ?0' \
+//   -H 'sec-ch-ua-platform: "Linux"' \
+//   -H 'sec-fetch-dest: empty' \
+//   -H 'sec-fetch-mode: cors' \
+//   -H 'sec-fetch-site: cross-site' \
+//   -H 'source: website' \
+//   -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36' \
+//   -H 'user-id: 36996'
+// yxj-ppyt-zeq
