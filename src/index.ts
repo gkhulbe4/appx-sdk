@@ -7,7 +7,8 @@ export * from "./react/hooks/useFolderExplorer";
 export * from "./react/hooks/useFeaturedCourses";
 export * from "./react/hooks/useWebSliderCourses";
 
-export type { AppxContextType, CurrentUser } from "./types/appxTypes";
 export * from "./types/coursesTypes";
 export * from "./types/userTypes";
 export * from "./types/folderTypes";
+export * from "./types/appxTypes";
+export * from "./types/videoTypes";
