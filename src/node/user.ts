@@ -161,8 +161,22 @@ export class UserApi {
     }
   }
 
-  // reset otp
-  // https://harkiratapi.classx.co.in/get/checkemailforresetpassword?useremail=garvitkhulbe4%40gmail.com
-  // https://harkiratapi.classx.co.in/get/otpverify?useremail=garvitkhulbe4%40gmail.com&otp=5847&mydeviceid=&mydeviceid2=
-  // https://harkiratapi.classx.co.in/post/changepasswordwithotpv3
+  async changeSecurity(
+    currentPass: string,
+    newPass: string,
+    confirmPass: string,
+    userId: string
+  ) {
+    try {
+      const formData = new FormData();
+      formData.append("currentpassword", currentPass);
+      formData.append("newpassword", newPass);
+      formData.append("confirmpassword", confirmPass);
+      formData.append("userid", userId);
+      const { data } = await this.client.post(`post/changesecurity`, formData);
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to change password");
+    }
+  }
 }
