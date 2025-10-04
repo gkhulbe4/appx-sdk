@@ -17,6 +17,7 @@
   "license": "ISC",
   "packageManager": "pnpm@10.15.1",
   "dependencies": {
+    "@tanstack/react-query": "^5.90.2",
     "axios": "^1.12.2"
   },
   "devDependencies": {

@@ -1,15 +1,22 @@
-import React, { createContext, useEffect, useState } from "react";
-import type { ReactNode } from "react";
-import { AppxSdk } from "../node/index";
+"use client";
+
+import { createContext, useEffect, useState, type ReactNode } from "react";
+import { AppxSdk } from "../node";
 import type { AppxContextType, CurrentUser } from "../types/appxTypes";
 
-const AppxContext = createContext<AppxContextType | null>(null);
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-export const AppxProvider: React.FC<{
+export const AppxContext = createContext<AppxContextType | null>(null);
+
+interface AppxProviderProps {
   baseUrl: string;
   children: ReactNode;
-}> = ({ baseUrl, children }) => {
+}
+
+export function AppxProvider({ baseUrl, children }: AppxProviderProps) {
   const [user, setUser] = useState<CurrentUser | null>(null);
+  const [queryClient] = useState(() => new QueryClient());
+
   const sdk = new AppxSdk({
     baseUrl,
     getToken: () => {
@@ -30,14 +37,12 @@ export const AppxProvider: React.FC<{
 
     document.cookie = `baseUrl=${encodeURIComponent(
       baseUrl
-    )}; path=/; expires=${60 * 60 * 24 * 7}`;
-  }, []);
+    )}; path=/; max-age=${60 * 60 * 24 * 7}`;
+  }, [baseUrl]);
 
   return (
     <AppxContext.Provider value={{ sdk, user, setUser }}>
-      {children}
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </AppxContext.Provider>
   );
-};
-
-export { AppxContext };
+}

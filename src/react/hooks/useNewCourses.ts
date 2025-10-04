@@ -1,36 +1,19 @@
-import { useState, useEffect } from "react";
 import { useAppx } from "../useAppx";
 import { CourseDetails } from "../../types/coursesTypes";
+import { useQuery } from "@tanstack/react-query";
 
 export function useNewCourses() {
   const { sdk } = useAppx();
-  const [newCourses, setNewCourses] = useState<CourseDetails[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let isMounted = true;
-
-    async function fetchNewCourses() {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await sdk.courses.getNewCourses("0", "-1");
-        if (isMounted) setNewCourses(res.data ?? []);
-      } catch (error) {
-        console.log("Failed to fetch new courses:", error);
-        if (isMounted) setError((error as Error).message);
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    }
-
-    fetchNewCourses();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [sdk]);
-
-  return { newCourses, loading, error };
+  return useQuery<CourseDetails[], Error>({
+    queryKey: ["newCourses"],
+    queryFn: async () => {
+      if (!sdk) throw new Error("SDK not initialized");
+      const res = await sdk.courses.getNewCourses("0", "-1");
+      return res.data ?? [];
+    },
+    staleTime: 5 * 60 * 1000,
+    retry: 1,
+    enabled: !!sdk,
+  });
 }
