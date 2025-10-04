@@ -1,9 +1,9 @@
 import type { AxiosInstance } from "axios";
 import type {
-  Course,
   CourseDetails,
   CurrencyRates,
   FeaturedCoursesResponse,
+  NewCoursesResponse,
   UserPurchasesResponse,
   WebSliderResponse,
 } from "../types/coursesTypes";
@@ -39,12 +39,29 @@ export class CoursesApi {
     }
   }
 
-  async getNewCourses(): Promise<Course[]> {
+  async getNewCourses(
+    start: string,
+    parentId: string
+  ): Promise<NewCoursesResponse> {
     try {
-      const { data } = await this.client.get("new-courses");
+      const { data } = await this.client.get(
+        `get/folder_courses?start=${start}&parent_id=${parentId}`
+      );
       return data;
     } catch (err) {
       this.handleError(err, "Fetching new courses failed");
+    }
+  }
+
+  // TODO: fix response types
+  async getCourseCategories(folderCourse: string): Promise<NewCoursesResponse> {
+    try {
+      const { data } = await this.client.get(
+        `get/coursecategories?folder_course=${folderCourse}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching new courses failed");
     }
   }
 

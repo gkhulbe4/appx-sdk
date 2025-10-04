@@ -125,4 +125,9 @@ export class UserApi {
   }
 
   async getUserLikedItems() {}
+
+  // reset otp
+  // https://harkiratapi.classx.co.in/get/checkemailforresetpassword?useremail=garvitkhulbe4%40gmail.com
+  // https://harkiratapi.classx.co.in/get/otpverify?useremail=garvitkhulbe4%40gmail.com&otp=5847&mydeviceid=&mydeviceid2=
+  // https://harkiratapi.classx.co.in/post/changepasswordwithotpv3
 }

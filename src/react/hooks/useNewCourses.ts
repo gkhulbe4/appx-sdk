@@ -1,36 +1,36 @@
 import { useState, useEffect } from "react";
 import { useAppx } from "../useAppx";
-import type { Course } from "../../types/coursesTypes";
+import { CourseDetails } from "../../types/coursesTypes";
 
 export function useNewCourses() {
   const { sdk } = useAppx();
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [newCourses, setNewCourses] = useState<CourseDetails[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
 
-    const fetchCourses = async () => {
+    async function fetchNewCourses() {
       setLoading(true);
       setError(null);
       try {
-        const data = await sdk.courses.getNewCourses();
-        if (isMounted) setCourses(data);
+        const res = await sdk.courses.getNewCourses("0", "-1");
+        if (isMounted) setNewCourses(res.data ?? []);
       } catch (error) {
         console.log("Failed to fetch new courses:", error);
         if (isMounted) setError((error as Error).message);
       } finally {
         if (isMounted) setLoading(false);
       }
-    };
+    }
 
-    fetchCourses();
+    fetchNewCourses();
 
     return () => {
       isMounted = false;
     };
   }, [sdk]);
 
-  return { courses, loading, error };
+  return { newCourses, loading, error };
 }

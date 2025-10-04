@@ -1,9 +1,8 @@
-export type Course = {
-  id: string;
-  title: string;
-  originalPrice: string;
-  discountedPrice: string;
-  discountPercentage: string;
+export type NewCoursesResponse = {
+  message: string;
+  status: number;
+  total: number;
+  data: CourseDetails[];
 };
 
 export type CourseDetails = {
