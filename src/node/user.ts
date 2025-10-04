@@ -126,6 +126,41 @@ export class UserApi {
 
   async getUserLikedItems() {}
 
+  async checkEmailForResetPassword(email_or_phone: string): Promise<{
+    data: string;
+    message: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `get/checkemailforresetpassword?useremail=${email_or_phone}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "User check failed");
+    }
+  }
+
+  async changePassword(
+    email_or_phone: string,
+    otp: string,
+    newPassword: string
+  ): Promise<{ data: string; message: string; status: number }> {
+    try {
+      const formData = new FormData();
+      formData.append("useremail", email_or_phone);
+      formData.append("otp", otp);
+      formData.append("newpassword", newPassword);
+      const { data } = await this.client.post(
+        `post/changepasswordwithotpv3`,
+        formData
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to change password");
+    }
+  }
+
   // reset otp
   // https://harkiratapi.classx.co.in/get/checkemailforresetpassword?useremail=garvitkhulbe4%40gmail.com
   // https://harkiratapi.classx.co.in/get/otpverify?useremail=garvitkhulbe4%40gmail.com&otp=5847&mydeviceid=&mydeviceid2=
