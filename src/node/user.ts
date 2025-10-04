@@ -166,7 +166,7 @@ export class UserApi {
     newPass: string,
     confirmPass: string,
     userId: string
-  ) {
+  ): Promise<{ data: string; message: string; status: number }> {
     try {
       const formData = new FormData();
       formData.append("currentpassword", currentPass);
