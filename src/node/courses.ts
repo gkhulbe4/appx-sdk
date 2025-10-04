@@ -102,7 +102,11 @@ export class CoursesApi {
   async getCurrency(
     baseCurrency: string,
     currencies: string
-  ): Promise<CurrencyRates> {
+  ): Promise<{
+    data: {
+      data: CurrencyRates;
+    };
+  }> {
     try {
       const { data } = await this.client.get(
         `get/get_currency_conversion?base_currency=${baseCurrency}&currencies=${currencies}`
