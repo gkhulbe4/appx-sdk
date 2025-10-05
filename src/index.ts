@@ -6,6 +6,7 @@ export * from "./react/hooks/usePurchases";
 export * from "./react/hooks/useFolderExplorer";
 export * from "./react/hooks/useFeaturedCourses";
 export * from "./react/hooks/useWebSliderCourses";
+export * from "./react/hooks/usePreviousLiveVideos";
 
 export * from "./types/coursesTypes";
 export * from "./types/userTypes";
