@@ -162,4 +162,20 @@ export class CoursesApi {
       this.handleError(error, "Fetching parent folder failed");
     }
   }
+
+  async getUserFilterCourse(courseId: string): Promise<{
+    data: string;
+    message: string;
+    msg: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `get/userfiltercourse?courseid=${courseId}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching user filter course failed");
+    }
+  }
 }
