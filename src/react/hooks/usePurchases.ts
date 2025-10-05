@@ -1,9 +1,5 @@
-import { useState, useEffect } from "react";
 import { useAppx } from "../useAppx";
-import type {
-  PurchasedCourse,
-  UserPurchasesResponse,
-} from "../../types/coursesTypes";
+import type { PurchasedCourse } from "../../types/coursesTypes";
 import { useQuery } from "@tanstack/react-query";
 
 type UsePurchasesProps = {
