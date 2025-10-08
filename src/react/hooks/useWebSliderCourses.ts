@@ -8,7 +8,7 @@ export function useWebSliderCourses() {
     queryKey: ["webSliderCourses"],
     queryFn: async () => {
       if (!sdk) throw new Error("SDK not initialized");
-      const res = await sdk.courses.getWebSliderCourses();
+      const res = await sdk.courses.getWebSliderCourses("0");
 
       if (res.status !== 200) throw new Error("Failed to fetch slider courses");
 
