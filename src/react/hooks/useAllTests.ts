@@ -8,6 +8,8 @@ interface UseAllTestsParams {
   examId: string;
 }
 
+const PAGE_SIZE = 10; // matches backend pagination
+
 export const useAllTests = ({
   search,
   clientApiUrl,
@@ -17,11 +19,11 @@ export const useAllTests = ({
 
   return useInfiniteQuery<TestSeriesResponse, Error>({
     queryKey: ["allTests", search, clientApiUrl, examId],
-    queryFn: async ({ pageParam = "0" }) => {
+    queryFn: async ({ pageParam = 0 }) => {
       if (!sdk) throw new Error("SDK not initialized");
 
       const res = await sdk.test.getAllTests(
-        pageParam as string,
+        pageParam!.toString(),
         search,
         clientApiUrl,
         examId
@@ -29,11 +31,13 @@ export const useAllTests = ({
 
       return res;
     },
-    getNextPageParam: (_lastPage, allPages) => {
-      const nextStart = allPages.length * 10;
+    getNextPageParam: (lastPage, allPages) => {
+      if (!lastPage.data || lastPage.data.length < PAGE_SIZE) return undefined;
+      // next start = current start + number of items fetched
+      const nextStart = allPages.length * PAGE_SIZE;
       return nextStart;
     },
-    initialPageParam: "0",
+    initialPageParam: 0,
     enabled: !!sdk,
   });
 };
