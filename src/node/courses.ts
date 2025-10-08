@@ -178,4 +178,42 @@ export class CoursesApi {
       this.handleError(error, "Fetching user filter course failed");
     }
   }
+
+  async discountCoupon(
+    couponCode: string,
+    userId: string,
+    itemId: string,
+    itemType: string,
+    installmentNo: string
+  ): Promise<{ message: string; status: string }> {
+    try {
+      const { data } = await this.client.get(
+        `/get/discount_coupon?coupon_code=${couponCode}&user_id=${userId}&item_id=${itemId}&item_type=${itemType}&installment_no=${installmentNo}&user_id=22468&item_id=16&item_type=10&installment_no=`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching discount coupon failed");
+    }
+  }
+
+  async createOrder(
+    userId: string,
+    itemId: string,
+    itemType: string,
+    couponCode: string,
+    currency: string
+  ) {
+    try {
+      const formData = new FormData();
+      formData.append("userid", userId);
+      formData.append("itemid", itemId);
+      formData.append("itemtype", itemType);
+      formData.append("coupon_code", couponCode || "");
+      formData.append("currency", currency);
+      const { data } = await this.client.post(`/post/createOrderv2`, formData);
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to create order");
+    }
+  }
 }

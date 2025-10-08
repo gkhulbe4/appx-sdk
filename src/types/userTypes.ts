@@ -52,3 +52,27 @@ export type CheckUserExists = {
   msg: string;
   data: boolean;
 };
+
+export type UserDetails = {
+  aadhar_image: string;
+  aadhar_status: "0" | "1";
+  datetime: string;
+  district: string;
+  email: string;
+  id: string;
+  info_1: string;
+  info_2: string;
+  info_3: string;
+  info_4: string;
+  info_5: string;
+  is_blank: boolean;
+  name: string;
+  password: string;
+  phone: string;
+  photo: string;
+  refer_code: string;
+  refer_credits: string;
+  state: string;
+  userid: string;
+  username: string;
+};

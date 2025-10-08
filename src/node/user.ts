@@ -1,6 +1,7 @@
 import type { AxiosInstance } from "axios";
 import type {
   CheckUserExists,
+  UserDetails,
   UserLoginResponse,
   UserSignupResponse,
   VerifyOtpResponse,
@@ -14,6 +15,21 @@ export class UserApi {
     const message =
       err.response?.data?.message || err.message || fallbackMessage;
     throw new Error(message);
+  }
+
+  async getUserDetails(userId: string): Promise<{
+    message: string;
+    status: number;
+    data: UserDetails[];
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `/get/get_user_dt?userid=${userId}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get user details");
+    }
   }
 
   async signup(

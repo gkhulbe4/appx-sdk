@@ -19,7 +19,6 @@ export function usePreviousLiveVideos({
     queryKey: ["previousLiveVideos", courseId, start, folderWiseCourse, userId],
     queryFn: async () => {
       if (!sdk) throw new Error("SDK not initialized");
-
       const res = await sdk.video.getPreviousLiveVideos(
         courseId,
         start,
