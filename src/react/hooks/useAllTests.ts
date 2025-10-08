@@ -33,7 +33,6 @@ export const useAllTests = ({
     },
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage.data || lastPage.data.length < PAGE_SIZE) return undefined;
-      // next start = current start + number of items fetched
       const nextStart = allPages.length * PAGE_SIZE;
       return nextStart;
     },

@@ -91,9 +91,11 @@ export class CoursesApi {
     }
   }
 
-  async getWebSliderCourses(): Promise<WebSliderResponse> {
+  async getWebSliderCourses(start: string): Promise<WebSliderResponse> {
     try {
-      const { data } = await this.client.get("get/web_slider?userid=1&start=0");
+      const { data } = await this.client.get(
+        `get/web_slider?userid=1&start=${start}`
+      );
       return data;
     } catch (err) {
       this.handleError(err, "Fetching web slider failed");
