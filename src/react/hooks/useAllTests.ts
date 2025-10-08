@@ -29,7 +29,7 @@ export const useAllTests = ({
         examId
       );
 
-      return res.data;
+      return res.data ?? [];
     },
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage || lastPage.length < PAGE_SIZE) return undefined;
