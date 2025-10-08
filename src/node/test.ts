@@ -1,5 +1,9 @@
 import { AxiosInstance } from "axios";
-import { TestSeriesResponse } from "../types/testTypes";
+import {
+  SubjectsResponse,
+  TestSeries,
+  TestSeriesResponse,
+} from "../types/testTypes";
 
 export class TestApi {
   constructor(private client: AxiosInstance) {}
@@ -27,7 +31,12 @@ export class TestApi {
     }
   }
 
-  async getTestDetails(testId: string) {
+  async getTestDetails(testId: string): Promise<{
+    data: TestSeries;
+    message: string;
+    msg: string;
+    status: number;
+  }> {
     try {
       const { data } = await this.client.get(
         `Test_Series/test_series_by_id?id=${testId}`
@@ -38,7 +47,11 @@ export class TestApi {
     }
   }
 
-  async getTestSeriesSubjects(testId: string) {
+  async getTestSeriesSubjects(testId: string): Promise<{
+    data: SubjectsResponse;
+    message: string;
+    status: number;
+  }> {
     try {
       const { data } = await this.client.get(
         `get/testseries_subjects?testseries_id=${testId}`
