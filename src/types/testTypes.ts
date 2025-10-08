@@ -30,7 +30,7 @@ export type TestSeries = {
   end_date: string;
   gif_display: string;
   test_pass_compulsory: string;
-  featured_discounts: any[]; // can refine if you know its structure
+  featured_discounts: any[];
 };
 
 export type TestSeriesResponse = {
@@ -39,4 +39,18 @@ export type TestSeriesResponse = {
   msg: string;
   total: number;
   data: TestSeries[];
+};
+
+export type Subject = {
+  subjectid: string;
+  subject_name: string;
+  subject_logo?: string;
+  is_paid?: number;
+  sortingparam?: string;
+};
+
+export type SubjectsResponse = {
+  status: number;
+  message: string;
+  data: Subject[];
 };

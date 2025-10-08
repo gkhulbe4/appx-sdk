@@ -37,4 +37,15 @@ export class TestApi {
       this.handleError(error, "Fetching test details failed");
     }
   }
+
+  async getTestSeriesSubjects(testId: string) {
+    try {
+      const { data } = await this.client.get(
+        `get/testseries_subjects?testseries_id=${testId}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching test subjects failed");
+    }
+  }
 }
