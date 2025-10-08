@@ -211,3 +211,24 @@ export type FeaturedCoursesResponse = {
   total: number;
   data: CourseDetails[];
 };
+
+export type Transfer = {
+  account: string;
+  amount: number;
+  currency: string;
+};
+
+export type PaymentDetails = {
+  amount: number;
+  creatorEconomyAmt: number;
+  currency: string;
+  order_id: string;
+  signature: string;
+  status: number;
+  tranfers: Transfer[];
+  transferAmount: number;
+  transferAmount2: number;
+  transferAmount3: number;
+  transferAmount4: number;
+  withoutpricekickeramount: number;
+};

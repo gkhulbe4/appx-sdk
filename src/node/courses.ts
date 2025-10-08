@@ -4,6 +4,7 @@ import type {
   CurrencyRates,
   FeaturedCoursesResponse,
   NewCoursesResponse,
+  PaymentDetails,
   UserPurchasesResponse,
   WebSliderResponse,
 } from "../types/coursesTypes";
@@ -202,7 +203,7 @@ export class CoursesApi {
     itemType: string,
     couponCode: string,
     currency: string
-  ) {
+  ): Promise<PaymentDetails> {
     try {
       const formData = new FormData();
       formData.append("userid", userId);
