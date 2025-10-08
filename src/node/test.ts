@@ -13,13 +13,13 @@ export class TestApi {
 
   async getAllTests(
     start: string,
-    search: string,
-    clientApiUrl: string,
-    examId: string
+    search: string = "",
+    clientApiUrl: string = "",
+    examId: string = ""
   ): Promise<TestSeriesResponse> {
     try {
       const { data } = await this.client.get(
-        `/get/test_series?start=${start}0&search=${search}&client_api_url=${clientApiUrl}&exam_id=${examId}`
+        `/get/test_series?start=${start}&search=${search}&client_api_url=${clientApiUrl}&exam_id=${examId}`
       );
       return data;
     } catch (error) {

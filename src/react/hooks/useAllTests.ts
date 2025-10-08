@@ -8,7 +8,7 @@ interface UseAllTestsParams {
   examId: string;
 }
 
-const PAGE_SIZE = 10; // matches backend pagination
+const PAGE_SIZE = 10;
 
 export const useAllTests = ({
   search,
