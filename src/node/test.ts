@@ -61,4 +61,21 @@ export class TestApi {
       this.handleError(error, "Fetching test subjects failed");
     }
   }
+
+  async getFreeTestSeries(start: string): Promise<{
+    data: TestSeries[];
+    message: string;
+    msg: string;
+    status: number;
+    total: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `get/test_series_free?start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching free test series failed");
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import type { AppxSdk } from "../node/index";
+import type { AppxSdk } from "../node/init/index";
 
 export type AppxContextType = {
   sdk: AppxSdk;

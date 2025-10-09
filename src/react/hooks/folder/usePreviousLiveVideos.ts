@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAppx } from "../useAppx";
-import { VideoDetails } from "../../types/videoTypes";
+import { useAppx } from "../../useAppx";
+import { VideoDetails } from "../../../types/videoTypes";
 
 export function usePreviousLiveVideos({
   courseId,

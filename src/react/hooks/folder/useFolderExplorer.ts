@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AppxSdk } from "../../node";
+import { AppxSdk } from "../../../node/init";
 
 export type Item = {
   id: string;

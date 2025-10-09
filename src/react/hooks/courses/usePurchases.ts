@@ -1,6 +1,6 @@
-import { useAppx } from "../useAppx";
-import type { PurchasedCourse } from "../../types/coursesTypes";
 import { useQuery } from "@tanstack/react-query";
+import { useAppx } from "../../useAppx";
+import { PurchasedCourse } from "../../../types/coursesTypes";
 
 type UsePurchasesProps = {
   userId: string;

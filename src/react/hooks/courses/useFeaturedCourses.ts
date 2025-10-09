@@ -1,6 +1,6 @@
-import { useAppx } from "../useAppx";
-import { CourseDetails } from "../../types/coursesTypes";
 import { useQuery } from "@tanstack/react-query";
+import { CourseDetails } from "../../../types/coursesTypes";
+import { useAppx } from "../../useAppx";
 
 export function useFeaturedCourses() {
   const { sdk } = useAppx();

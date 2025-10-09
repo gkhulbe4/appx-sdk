@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAppx } from "../useAppx";
+import { useAppx } from "../../useAppx";
 
 export function useWebSliderCourses() {
   const { sdk } = useAppx();

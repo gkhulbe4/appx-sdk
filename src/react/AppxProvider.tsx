@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import { AppxSdk } from "../node";
+import { AppxSdk } from "../node/init";
 import type { AppxContextType, CurrentUser } from "../types/appxTypes";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

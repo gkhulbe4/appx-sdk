@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useAppx } from "../useAppx";
-import { TestSeries, TestSeriesResponse } from "../../types/testTypes";
+import { useAppx } from "../../useAppx";
+import { TestSeries, TestSeriesResponse } from "../../../types/testTypes";
 
 interface UseAllTestsParams {
   search: string;
