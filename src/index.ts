@@ -8,6 +8,7 @@ export * from "./react/hooks/courses/useFeaturedCourses";
 export * from "./react/hooks/courses/useWebSliderCourses";
 export * from "./react/hooks/folder/usePreviousLiveVideos";
 export * from "./react/hooks/tests/useAllTests";
+export * from "./react/hooks/quizzes/useQuizTitles";
 
 export * from "./types/coursesTypes";
 export * from "./types/userTypes";
