@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import {
+  QuizAttemptQuestion,
   QuizTitle,
   QuizTitleResponse,
   QuizUniqueResponse,
@@ -60,7 +61,12 @@ export class QuizApi {
     }
   }
 
-  async getQuizTitleQuestions(quizTitleId: string) {
+  async getQuizTitleQuestions(quizTitleId: string): Promise<{
+    data: QuizAttemptQuestion[];
+    message: string;
+    status: number;
+    total: number;
+  }> {
     try {
       const { data } = await this.client.get(
         `get/quizquestion?start=-1&quizid=${quizTitleId}`

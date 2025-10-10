@@ -37,3 +37,30 @@ export type QuizTitleResponse = {
   total: number;
   data: QuizTitle[];
 };
+
+export type QuizAttemptQuestion = {
+  id: string;
+  quiz_id: string;
+  question: string;
+  question_image: string;
+  option_1: string;
+  option_2: string;
+  option_3: string;
+  option_4: string;
+  option_5: string;
+  option_image_1: string;
+  option_image_2: string;
+  option_image_3: string;
+  option_image_4: string;
+  option_image_5: string;
+  answer: string;
+  correct_score: string;
+  negative_score: string;
+  deleted: string;
+  difficulty_level: string;
+  solution_heading: string;
+  solution_text: string;
+  solution_image: string;
+  solution_video: string;
+  sortingparam: string;
+};
