@@ -1,5 +1,9 @@
 import { AxiosInstance } from "axios";
-import { QuizTitleResponse, QuizUniqueResponse } from "../types/quizTypes";
+import {
+  QuizTitle,
+  QuizTitleResponse,
+  QuizUniqueResponse,
+} from "../types/quizTypes";
 
 export class QuizApi {
   constructor(private client: AxiosInstance) {}
@@ -34,6 +38,81 @@ export class QuizApi {
       return data;
     } catch (error) {
       this.handleError(error, "Fetching quiz titles failed");
+    }
+  }
+
+  async getQuizTitleById(
+    quizTitleId: string,
+    userId: string
+  ): Promise<{
+    data: QuizTitle;
+    message: string;
+    msg: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `/get/quiztitlebyid?quiz_title_id=${quizTitleId}&userid=${userId}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching quiz title by id failed");
+    }
+  }
+
+  async getQuizTitleQuestions(quizTitleId: string) {
+    try {
+      const { data } = await this.client.get(
+        `get/quizquestion?start=-1&quizid=${quizTitleId}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching quiz questions failed");
+    }
+  }
+
+  async generateTencentWebsitePresignedUrl(): Promise<{
+    data: {
+      actualUrl: string;
+      presignedUrl: string;
+    };
+    msg: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.post(
+        "post/generateTencentWebsitePresignedUrl"
+      );
+      return data;
+    } catch (error) {
+      this.handleError(
+        error,
+        "Failed to generate tencent website presigned url"
+      );
+    }
+  }
+
+  async getQuizRank(
+    maxMarks: string,
+    quizId: string,
+    marks: string,
+    userId: string
+  ): Promise<{
+    data: {
+      full_scorers: number;
+      rank: number;
+      total: number;
+    };
+    message: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `get/get_quiz_rank?max_marks=${maxMarks}&quiz_id=${quizId}&marks=${marks}&user_id=${userId}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get quiz rank");
     }
   }
 }

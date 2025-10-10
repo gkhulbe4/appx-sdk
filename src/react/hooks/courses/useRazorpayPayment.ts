@@ -99,3 +99,5 @@ export function useRazorpayPayment() {
 }
 
 export default useRazorpayPayment;
+
+// curl --location 'https://tempapi.classx.co.in/get/websiteconfig?domain=eminenceinstitute.akamai.net.in&disable_redis_cache=true'
