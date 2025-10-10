@@ -78,7 +78,7 @@ export function useRazorpayPayment() {
         token: userToken,
       };
 
-      if (razorPayKey) {
+      if (razorPayKey != null) {
         const rzp = new window.Razorpay(options);
         rzp.open();
       } else {
