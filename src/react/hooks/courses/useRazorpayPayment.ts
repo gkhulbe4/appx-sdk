@@ -54,7 +54,7 @@ export function useRazorpayPayment() {
       }
 
       const options = {
-        key: razorPayKey || COMMON_RAZORPAY_KEY,
+        key: "rzp_live_a0GB5d1DRNWqjW",
         currency,
         name: courseName,
         description: courseDescription,

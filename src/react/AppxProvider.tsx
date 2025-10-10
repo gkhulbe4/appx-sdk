@@ -32,6 +32,25 @@ export function AppxProvider({
   });
 
   useEffect(() => {
+    const existingScript = document.querySelector(
+      'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
+    );
+
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = () => {
+        console.log("Razorpay script loaded successfully");
+      };
+      script.onerror = () => {
+        console.error("Failed to load Razorpay script");
+      };
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  useEffect(() => {
     let deviceId = localStorage.getItem("browserDeviceId");
 
     if (!deviceId) {
