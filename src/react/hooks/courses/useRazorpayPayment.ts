@@ -1,7 +1,7 @@
 import { RazorpayOptions } from "../../../types/razorTypes";
 import { useAppx } from "../../useAppx";
 
-const COMMON_RAZORPAY_KEY = "rzp_live_ClassXCommonKey";
+const COMMON_RAZORPAY_KEY = "rzp_live_a0GB5d1DRNWqjW";
 
 declare global {
   interface Window {
