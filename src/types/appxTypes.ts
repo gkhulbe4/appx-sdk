@@ -4,6 +4,7 @@ export type AppxContextType = {
   sdk: AppxSdk;
   user: CurrentUser | null;
   setUser: React.Dispatch<React.SetStateAction<CurrentUser | null>>;
+  razorPayKey: string | null;
 };
 
 export type AppxSdkOptions = {

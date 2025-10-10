@@ -9,6 +9,7 @@ export * from "./react/hooks/courses/useWebSliderCourses";
 export * from "./react/hooks/folder/usePreviousLiveVideos";
 export * from "./react/hooks/tests/useAllTests";
 export * from "./react/hooks/quizzes/useQuizTitles";
+export * from "./react/hooks/courses/useRazorpayPayment";
 
 export * from "./types/coursesTypes";
 export * from "./types/userTypes";
@@ -17,3 +18,4 @@ export * from "./types/appxTypes";
 export * from "./types/videoTypes";
 export * from "./types/testTypes";
 export * from "./types/quizTypes";
+export * from "./types/razorTypes";

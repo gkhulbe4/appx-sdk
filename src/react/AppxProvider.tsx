@@ -9,11 +9,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 export const AppxContext = createContext<AppxContextType | null>(null);
 
 interface AppxProviderProps {
+  razorPayKey: string;
   baseUrl: string;
   children: ReactNode;
 }
 
-export function AppxProvider({ baseUrl, children }: AppxProviderProps) {
+export function AppxProvider({
+  razorPayKey,
+  baseUrl,
+  children,
+}: AppxProviderProps) {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [queryClient] = useState(() => new QueryClient());
 
@@ -41,7 +46,7 @@ export function AppxProvider({ baseUrl, children }: AppxProviderProps) {
   }, [baseUrl]);
 
   return (
-    <AppxContext.Provider value={{ sdk, user, setUser }}>
+    <AppxContext.Provider value={{ sdk, user, setUser, razorPayKey }}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </AppxContext.Provider>
   );
