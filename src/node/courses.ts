@@ -54,7 +54,6 @@ export class CoursesApi {
     }
   }
 
-  // TODO: fix response types
   async getCourseCategories(folderCourse: string): Promise<NewCoursesResponse> {
     try {
       const { data } = await this.client.get(
@@ -63,6 +62,42 @@ export class CoursesApi {
       return data;
     } catch (error) {
       this.handleError(error, "Fetching new courses failed");
+    }
+  }
+
+  // TODO: give types
+  async getCourseList(start: string, examName: string = "") {
+    try {
+      const { data } = await this.client.get(
+        `get/courselist?exam_name=${examName}&start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching course list failed");
+    }
+  }
+
+  async getCourseFreeContent(
+    courseId: string,
+    start: string,
+    folderWiseCourse: string
+  ) {
+    try {
+      const { data } = await this.client.get(
+        `get/course_class_freecontentv2?courseid=${courseId}&start=${start}&folder_wise_course=${folderWiseCourse}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching course free content failed");
+    }
+  }
+
+  async getFaqByCourseId(courseId: string) {
+    try {
+      const { data } = await this.client.get(`get/faqs?course_id=${courseId}`);
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching faq failed");
     }
   }
 

@@ -1,8 +1,6 @@
 import { RazorpayOptions } from "../../../types/razorTypes";
 import { useAppx } from "../../useAppx";
 
-const COMMON_RAZORPAY_KEY = "rzp_live_a0GB5d1DRNWqjW";
-
 declare global {
   interface Window {
     Razorpay: any;
@@ -54,7 +52,7 @@ export function useRazorpayPayment() {
       }
 
       const options = {
-        key: razorPayKey || COMMON_RAZORPAY_KEY,
+        key: razorPayKey,
         currency,
         name: courseName,
         description: courseDescription,
@@ -82,6 +80,10 @@ export function useRazorpayPayment() {
         const rzp = new window.Razorpay(options);
         rzp.open();
       } else {
+        const res = await sdk.razorpay.getRazorPayKey(baseUrl, userToken);
+        if (res != null) {
+          options["key"] = res;
+        }
         const response = await insertRzpOptions(options);
 
         if (response?.data) {

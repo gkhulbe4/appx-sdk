@@ -78,4 +78,17 @@ export class TestApi {
       this.handleError(error, "Fetching free test series failed");
     }
   }
+
+  async getTestTitleV2(
+    testId: string,
+    subjectId: string,
+    userId: string,
+    search: string,
+    start: string
+  ) {
+    try {
+    } catch (error) {
+      this.handleError(error, "Fetching test series v2 failed");
+    }
+  }
 }

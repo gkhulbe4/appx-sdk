@@ -1,5 +1,5 @@
 export type RazorpayOptions = {
-  key: string;
+  key: string | null;
   currency: string;
   name: string;
   description: string;
