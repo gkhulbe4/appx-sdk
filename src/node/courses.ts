@@ -1,8 +1,11 @@
 import type { AxiosInstance } from "axios";
 import type {
+  CourseCategoryResponse,
   CourseDetails,
+  CourseListResponse,
   CurrencyRates,
   FeaturedCoursesResponse,
+  FreeContentResponse,
   NewCoursesResponse,
   PaymentDetails,
   UserPurchasesResponse,
@@ -54,7 +57,9 @@ export class CoursesApi {
     }
   }
 
-  async getCourseCategories(folderCourse: string): Promise<NewCoursesResponse> {
+  async getCourseCategories(
+    folderCourse: string
+  ): Promise<CourseCategoryResponse> {
     try {
       const { data } = await this.client.get(
         `get/coursecategories?folder_course=${folderCourse}`
@@ -65,8 +70,10 @@ export class CoursesApi {
     }
   }
 
-  // TODO: give types
-  async getCourseList(start: string, examName: string = "") {
+  async getCourseList(
+    start: string,
+    examName: string = ""
+  ): Promise<CourseListResponse> {
     try {
       const { data } = await this.client.get(
         `get/courselist?exam_name=${examName}&start=${start}`
@@ -81,7 +88,7 @@ export class CoursesApi {
     courseId: string,
     start: string,
     folderWiseCourse: string
-  ) {
+  ): Promise<FreeContentResponse> {
     try {
       const { data } = await this.client.get(
         `get/course_class_freecontentv2?courseid=${courseId}&start=${start}&folder_wise_course=${folderWiseCourse}`
