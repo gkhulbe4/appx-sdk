@@ -4,12 +4,14 @@ import type {
   CourseDetails,
   CourseListResponse,
   CurrencyRates,
+  Exam,
   FeaturedCoursesResponse,
   FreeContentResponse,
   NewCoursesResponse,
   PaymentDetails,
   UserPurchasesResponse,
   WebSliderResponse,
+  YoutubeClassStudyByTopic,
 } from "../types/coursesTypes";
 import {
   FolderContentResponse,
@@ -171,7 +173,7 @@ export class CoursesApi {
   ): Promise<RootFolderContentResponse> {
     try {
       const { data } = await this.client.get(
-        `https://harkiratapi.classx.co.in/get/folder_contentsv3?course_id=${courseId}&parent_id=${parentId}&windowsapp=${windowsapp}&start=${start}`
+        `get/folder_contentsv3?course_id=${courseId}&parent_id=${parentId}&windowsapp=${windowsapp}&start=${start}`
       );
       return data;
     } catch (error) {
@@ -259,6 +261,109 @@ export class CoursesApi {
       return data;
     } catch (error) {
       this.handleError(error, "Failed to create order");
+    }
+  }
+
+  async getExamList(): Promise<{
+    data: Exam[];
+    message: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get("get/examslist");
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get exam list");
+    }
+  }
+
+  async getYoutubeClassStudy(
+    examId: string,
+    start: string = "-1"
+  ): Promise<{
+    data: {
+      sortingparam: string;
+      subjectid: string;
+      subjectlogo: string;
+      subjectname: string;
+    };
+    message: string;
+    msg: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `get/youtubeclassstudyapi?examid=${examId}&start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get youtube class study");
+    }
+  }
+
+  async getLiveUpcomingFreeCourseClass(
+    examId: string,
+    start: string = "-1"
+  ): Promise<{
+    data: any[];
+    message: string;
+    msg: string;
+    status: number;
+    total: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `get/live_upcoming_free_course_classv2?examid=${examId}&start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get live upcoming free class");
+    }
+  }
+
+  async getYoutubeClassStudyBySubject(
+    examId: string,
+    subjectId: string,
+    start: string = "-1"
+  ): Promise<{
+    data: {
+      sortingparam: string;
+      topicid: string;
+      topiclogo: string;
+      topicname: string;
+    };
+    message: string;
+    msg: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `get/youtubeclasstopicapi?examid=${examId}&subjectid=${subjectId}&start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get youtube class study by subject");
+    }
+  }
+
+  async getYoutubeClassStudyByTopic(
+    examId: string,
+    subjectId: string,
+    topicId: string,
+    start: string
+  ): Promise<{
+    data: YoutubeClassStudyByTopic[];
+    message: string;
+    msg: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `get/youtubeclassbyexamsubtopconceptapiv2?examid=${examId}&subjectid=${subjectId}&topicid=${topicId}&start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get youtube class study by topic");
     }
   }
 }

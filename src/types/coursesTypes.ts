@@ -405,3 +405,32 @@ export type PaymentDetails = {
   transferAmount4: number;
   withoutpricekickeramount: number;
 };
+
+export type Exam = {
+  id: string;
+  exam_name: string;
+  exam_logo: string;
+  exam_category: string;
+  sortingparam: string;
+  totalvideos: number;
+};
+
+export type YoutubeClassStudyByTopic = {
+  id: string;
+  Title: string;
+  concept: string;
+  date_and_time: string;
+  download_link: string;
+  exam_id: string;
+  file_link: string;
+  live_status: string;
+  material_type: string;
+  recording_schedule: string;
+  save_flag: string;
+  section: string;
+  subject: string;
+  thumbnail: string;
+  topic: string;
+  ypdf_link: string;
+  ypdf_link2: string;
+};
