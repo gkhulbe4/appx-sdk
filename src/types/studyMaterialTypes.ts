@@ -29,3 +29,21 @@ export type StudyMaterialByTypeResponse = {
   status: number;
   total: number;
 };
+
+export type PdfWatermarkStyle = {
+  watermarkType: string;
+  opacity: number;
+  size: number;
+  rotate: number;
+};
+
+export type PdfWatermarkConfig = {
+  PDF_WATERMARK_API_VERSION: string;
+  cached: boolean;
+  is_pdf_watermark_enabled: string;
+  pdf_watermark_style: PdfWatermarkStyle;
+  opacity: number;
+  rotate: number;
+  size: number;
+  watermarkType: string;
+};

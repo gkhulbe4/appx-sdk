@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import {
+  PdfWatermarkConfig,
   StudyMaterialByType,
   StudyMaterialByTypeResponse,
 } from "../types/studyMaterialTypes";
@@ -44,6 +45,19 @@ export class StudyMaterialApi {
       return data;
     } catch (error) {
       this.handleError(error, "Failed to get study material by id");
+    }
+  }
+
+  async getPdfWatermarkConfig(): Promise<{
+    data: PdfWatermarkConfig;
+    message: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get("get/pdfWatermarkConfig");
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get pdf watermark config");
     }
   }
 }
