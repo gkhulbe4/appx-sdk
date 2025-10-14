@@ -14,11 +14,7 @@ interface AppxProviderProps {
   children: ReactNode;
 }
 
-export function AppxProvider({
-  razorPayKey,
-  baseUrl,
-  children,
-}: AppxProviderProps) {
+export function AppxProvider({ baseUrl, children }: AppxProviderProps) {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [queryClient] = useState(() => new QueryClient());
 
@@ -65,7 +61,7 @@ export function AppxProvider({
   }, [baseUrl]);
 
   return (
-    <AppxContext.Provider value={{ sdk, user, setUser, razorPayKey }}>
+    <AppxContext.Provider value={{ sdk, user, setUser }}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </AppxContext.Provider>
   );

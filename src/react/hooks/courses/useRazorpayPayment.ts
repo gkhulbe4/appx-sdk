@@ -7,8 +7,15 @@ declare global {
   }
 }
 
+function isIOS(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
+  );
+}
+
 export function useRazorpayPayment() {
-  const { razorPayKey, sdk } = useAppx();
+  const { sdk } = useAppx();
 
   async function insertRzpOptions(options: RazorpayOptions) {
     try {
@@ -51,6 +58,8 @@ export function useRazorpayPayment() {
         return;
       }
 
+      const razorPayKey = await sdk.razorpay.getRazorPayKey(baseUrl, userToken);
+
       const options = {
         key: razorPayKey,
         currency,
@@ -75,17 +84,12 @@ export function useRazorpayPayment() {
         },
         token: userToken,
       };
-
-      if (razorPayKey != null) {
+      // device user agent
+      if (isIOS() == true) {
         const rzp = new window.Razorpay(options);
         rzp.open();
       } else {
-        const res = await sdk.razorpay.getRazorPayKey(baseUrl, userToken);
-        if (res != null) {
-          options["key"] = res;
-        }
         const response = await insertRzpOptions(options);
-
         if (response?.data) {
           window.location.href = `https://checkout.classx.co.in/payment-ios?id=${response.data}`;
         } else {
@@ -102,4 +106,4 @@ export function useRazorpayPayment() {
 
 export default useRazorpayPayment;
 
-// curl --location 'https://tempapi.classx.co.in/get/websiteconfig?domain=eminenceinstitute.akamai.net.in&disable_redis_cache=true'
+// how to know whether someone has cancelled the payment in razorpay
