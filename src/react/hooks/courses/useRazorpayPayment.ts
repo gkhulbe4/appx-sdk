@@ -99,7 +99,7 @@ export function useRazorpayPayment() {
             .catch(console.error);
         });
 
-        rzp.on("payment.dismiss", function () {
+        rzp.on("payment.cancelled", function () {
           sdk.razorpay.cancelPayment(options.order_id).catch(console.error);
         });
 
