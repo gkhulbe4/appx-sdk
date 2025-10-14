@@ -41,4 +41,43 @@ export class RazorpayApi {
       this.handleError(error, "Failed to get razorpay key");
     }
   }
+
+  async insertLeadsData(
+    userId: string,
+    itemId: string,
+    itemType: string,
+    remarks: string = "Payment cancelled",
+    source: string = "website"
+  ): Promise<{
+    data: string;
+    message: string;
+    status: number;
+  }> {
+    try {
+      const formData = new FormData();
+      formData.append("userid", userId);
+      formData.append("itemid", itemId);
+      formData.append("itemtype", itemType);
+      formData.append("remarks", remarks);
+      formData.append("source", source);
+
+      const { data } = await this.client.post(`post/insertleadsdata`, formData);
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to insert leads data");
+    }
+  }
+
+  async cancelPayment(
+    orderId: string
+  ): Promise<{ data: any[]; message: string; status: number }> {
+    try {
+      const { data } = await this.client.put(
+        `payments/orders/${orderId}/cancel`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to cancel payment");
+    }
+  }
 }

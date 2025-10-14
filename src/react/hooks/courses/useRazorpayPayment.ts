@@ -87,6 +87,19 @@ export function useRazorpayPayment() {
       // device user agent
       if (isIOS() == false) {
         const rzp = new window.Razorpay(options);
+        rzp.on("payment.failed", async () => {
+          await sdk.razorpay.insertLeadsData(
+            userId,
+            itemId,
+            itemType,
+            "Payment cancelled",
+            "website"
+          );
+        });
+
+        rzp.on("payment.dismiss", async () => {
+          await sdk.razorpay.cancelPayment(options.order_id);
+        });
         rzp.open();
       } else {
         const response = await insertRzpOptions(options);
