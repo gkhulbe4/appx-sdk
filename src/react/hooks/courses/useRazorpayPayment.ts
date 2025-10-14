@@ -85,7 +85,7 @@ export function useRazorpayPayment() {
         token: userToken,
       };
       // device user agent
-      if (isIOS() == true) {
+      if (isIOS() == false) {
         const rzp = new window.Razorpay(options);
         rzp.open();
       } else {

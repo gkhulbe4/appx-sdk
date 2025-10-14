@@ -9,7 +9,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 export const AppxContext = createContext<AppxContextType | null>(null);
 
 interface AppxProviderProps {
-  razorPayKey: string | null;
   baseUrl: string;
   children: ReactNode;
 }
