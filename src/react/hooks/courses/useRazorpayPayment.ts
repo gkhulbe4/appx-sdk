@@ -88,7 +88,6 @@ export function useRazorpayPayment() {
         },
         modal: {
           ondismiss: function () {
-            console.log("Payment modal dismissed by user");
             sdk.razorpay
               .insertLeadsData(
                 userId,
@@ -103,6 +102,8 @@ export function useRazorpayPayment() {
           },
         },
       };
+
+      console.log("Razorpay options:", options);
 
       if (isIOS() == false) {
         const rzp = new window.Razorpay(options);
