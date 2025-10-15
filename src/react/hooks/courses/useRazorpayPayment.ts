@@ -83,24 +83,41 @@ export function useRazorpayPayment() {
           contact: userContact,
         },
         token: userToken,
+        handler: function (response: any) {
+          console.log("Payment successful:", response);
+        },
+        modal: {
+          ondismiss: function () {
+            console.log("Payment modal dismissed by user");
+            sdk.razorpay
+              .insertLeadsData(
+                userId,
+                itemId,
+                itemType,
+                "Payment cancelled",
+                "website"
+              )
+              .catch(console.error);
+
+            sdk.razorpay.cancelPayment(res.order_id).catch(console.error);
+          },
+        },
       };
-      // device user agent
+
       if (isIOS() == false) {
         const rzp = new window.Razorpay(options);
-        rzp.on("payment.failed", function () {
+
+        rzp.on("payment.failed", function (response: any) {
+          console.log("Payment failed:", response.error);
           sdk.razorpay
             .insertLeadsData(
               userId,
               itemId,
               itemType,
-              "Payment cancelled",
+              "Payment failed",
               "website"
             )
             .catch(console.error);
-        });
-
-        rzp.on("payment.cancelled", function () {
-          sdk.razorpay.cancelPayment(options.order_id).catch(console.error);
         });
 
         rzp.open();
@@ -121,5 +138,3 @@ export function useRazorpayPayment() {
 }
 
 export default useRazorpayPayment;
-
-// how to know whether someone has cancelled the payment in razorpay
