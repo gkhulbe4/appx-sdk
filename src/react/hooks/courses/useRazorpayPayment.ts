@@ -104,32 +104,48 @@ export function useRazorpayPayment() {
       };
 
       console.log("Razorpay options:", options);
+      const rzp = new window.Razorpay(options);
 
-      if (isIOS() == false) {
-        const rzp = new window.Razorpay(options);
+      rzp.on("payment.failed", function (response: any) {
+        console.log("Payment failed:", response.error);
+        sdk.razorpay
+          .insertLeadsData(
+            userId,
+            itemId,
+            itemType,
+            "Payment failed",
+            "website"
+          )
+          .catch(console.error);
+      });
 
-        rzp.on("payment.failed", function (response: any) {
-          console.log("Payment failed:", response.error);
-          sdk.razorpay
-            .insertLeadsData(
-              userId,
-              itemId,
-              itemType,
-              "Payment failed",
-              "website"
-            )
-            .catch(console.error);
-        });
+      rzp.open();
 
-        rzp.open();
-      } else {
-        const response = await insertRzpOptions(options);
-        if (response?.data) {
-          window.location.href = `https://checkout.classx.co.in/payment-ios?id=${response.data}`;
-        } else {
-          console.error("Failed to insert Razorpay options", response);
-        }
-      }
+      // if (isIOS() == false) {
+      //   const rzp = new window.Razorpay(options);
+
+      //   rzp.on("payment.failed", function (response: any) {
+      //     console.log("Payment failed:", response.error);
+      //     sdk.razorpay
+      //       .insertLeadsData(
+      //         userId,
+      //         itemId,
+      //         itemType,
+      //         "Payment failed",
+      //         "website"
+      //       )
+      //       .catch(console.error);
+      //   });
+
+      //   rzp.open();
+      // } else {
+      //   const response = await insertRzpOptions(options);
+      //   if (response?.data) {
+      //     window.location.href = `https://checkout.classx.co.in/payment-ios?id=${response.data}`;
+      //   } else {
+      //     console.error("Failed to insert Razorpay options", response);
+      //   }
+      // }
     } catch (error) {
       console.error("Payment error:", error);
     }
