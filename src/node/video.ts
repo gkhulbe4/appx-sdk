@@ -38,8 +38,8 @@ export class VideoApi {
   async fetchVideoDetailsById(
     courseId: string,
     videoId: string,
-    ytFlag: string | "0",
-    folderWiseCourse: string,
+    ytFlag: string = "0",
+    folderWiseCourse: string = "1",
     lc_app_api_url: string = ""
   ): Promise<VideoDetailsResponse> {
     try {
