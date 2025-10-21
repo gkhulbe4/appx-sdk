@@ -35,12 +35,8 @@ export class AppxSdk {
     this.studyMaterial = new StudyMaterialApi(client);
   }
 
-  async fetchFirebaseConfig(
-    domain: string,
-    token: string,
-    userId: string
-  ): Promise<FirebaseConfig> {
-    return await fetchFirebaseConfig(domain, token, userId);
+  async fetchFirebaseConfig(domain: string): Promise<FirebaseConfig> {
+    return await fetchFirebaseConfig(domain);
   }
 
   async initFirebaseWithConfig(config: FirebaseConfig): Promise<Database> {
@@ -48,18 +44,10 @@ export class AppxSdk {
     return this.firebaseDb;
   }
 
-  async initFirebaseForDomain(
-    domain: string,
-    token: string,
-    userId: string
-  ): Promise<Database> {
+  async initFirebaseForDomain(domain: string): Promise<Database> {
     if (!domain)
       throw new Error("Domain is required for fetching Firebase config");
-    if (!token)
-      throw new Error("Token is required for fetching Firebase config");
-    if (!userId)
-      throw new Error("UserId is required for fetching Firebase config");
-    const config = await this.fetchFirebaseConfig(domain, token, userId);
+    const config = await this.fetchFirebaseConfig(domain);
     if (!config) throw new Error("Firebase config not returned from API");
 
     return await this.initFirebaseWithConfig(config);

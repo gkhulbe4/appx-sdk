@@ -33,9 +33,9 @@ export function AppxProvider({ baseUrl, children }: AppxProviderProps) {
       const userId = currentUser ? JSON.parse(currentUser).id : "";
       const domain = process.env.NEXT_PUBLIC_DOMAIN_URL!;
 
-      console.log("Initializing Firebase with:", { domain, userId });
+      console.log("Initializing Firebase with:", { domain });
 
-      await sdk.initFirebaseForDomain(domain, token, userId);
+      await sdk.initFirebaseForDomain(domain);
       console.log("Firebase initialized successfully");
 
       setFirebaseSdkReady(true);

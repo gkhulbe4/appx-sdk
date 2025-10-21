@@ -1,4 +1,3 @@
-// node/firebaseConfig.ts
 import axios from "axios";
 
 export interface FirebaseConfig {
@@ -11,26 +10,13 @@ export interface FirebaseConfig {
   appId: string;
 }
 
-export const fetchFirebaseConfig = async (
-  domain: string,
-  token: string,
-  userId: string
-) => {
+export const fetchFirebaseConfig = async (domain: string) => {
   try {
     const res = await axios.get(
       `https://tempapi.classx.co.in/get/websiteconfig?domain=${domain}`,
       {
         headers: {
           "auth-key": "appxapi",
-          authorization: token,
-          "client-service": "Appx",
-          "device-id": `WebBrowser${Date.now()}${Math.random()
-            .toString(36)
-            .slice(2, 8)}`,
-          "device-type": "browser",
-          source: "website",
-          "user-id": userId,
-          accept: "*/*",
         },
       }
     );
