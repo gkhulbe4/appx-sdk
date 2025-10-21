@@ -437,30 +437,28 @@ export type YoutubeClassStudyByTopic = {
 
 export type CourseContentByLiveStatusResponse = {
   data: {
-    live: FreeContent &
-      {
-        description: string;
-        event_date: string;
-        topic: number;
-        download_url_higher_version: string;
-        download_url_lower_version: string;
-        recording_hls: string;
-        save_flag: string;
-        parent_id: number;
-        rec_domain: string;
-      }[];
-    upcoming: FreeContent &
-      {
-        description: string;
-        event_date: string;
-        topic: number;
-        download_url_higher_version: string;
-        download_url_lower_version: string;
-        recording_hls: string;
-        save_flag: string;
-        parent_id: number;
-        rec_domain: string;
-      }[];
+    live: (FreeContent & {
+      description: string;
+      event_date: string;
+      topic: number;
+      download_url_higher_version: string;
+      download_url_lower_version: string;
+      recording_hls: string;
+      save_flag: string;
+      parent_id: number;
+      rec_domain: string;
+    })[];
+    upcoming: (FreeContent & {
+      description: string;
+      event_date: string;
+      topic: number;
+      download_url_higher_version: string;
+      download_url_lower_version: string;
+      recording_hls: string;
+      save_flag: string;
+      parent_id: number;
+      rec_domain: string;
+    })[];
   };
   message: string;
   status: number;
