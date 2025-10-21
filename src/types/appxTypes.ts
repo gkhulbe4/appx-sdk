@@ -7,6 +7,7 @@ export type AppxContextType = {
 };
 
 export type AppxSdkOptions = {
+  domainUrl: string;
   baseUrl: string;
   getToken?: () => string | null;
   defaultHeaders?: Record<string, string>;

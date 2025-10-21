@@ -9,16 +9,22 @@ export const AppxContext = createContext<AppxContextType | null>(null);
 
 interface AppxProviderProps {
   baseUrl: string;
+  domainUrl: string;
   children: ReactNode;
 }
 
-export function AppxProvider({ baseUrl, children }: AppxProviderProps) {
+export function AppxProvider({
+  baseUrl,
+  domainUrl,
+  children,
+}: AppxProviderProps) {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [firebaseSdkReady, setFirebaseSdkReady] = useState(false);
   const [queryClient] = useState(() => new QueryClient());
 
   const sdk = new AppxSdk({
     baseUrl,
+    domainUrl,
     getToken: () => {
       const currentUserDetails = localStorage.getItem("current_user");
       if (!currentUserDetails) return null;
