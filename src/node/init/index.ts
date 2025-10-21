@@ -53,7 +53,15 @@ export class AppxSdk {
     token: string,
     userId: string
   ): Promise<Database> {
+    if (!domain)
+      throw new Error("Domain is required for fetching Firebase config");
+    if (!token)
+      throw new Error("Token is required for fetching Firebase config");
+    if (!userId)
+      throw new Error("UserId is required for fetching Firebase config");
     const config = await this.fetchFirebaseConfig(domain, token, userId);
+    if (!config) throw new Error("Firebase config not returned from API");
+
     return await this.initFirebaseWithConfig(config);
   }
 }
