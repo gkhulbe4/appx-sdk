@@ -103,7 +103,7 @@ export function useRazorpayPayment() {
         },
       };
 
-      console.log("Razorpay options:", options);
+      // console.log("Razorpay options:", options);
       const rzp = new window.Razorpay(options);
 
       rzp.on("payment.failed", function (response: any) {

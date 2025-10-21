@@ -183,3 +183,24 @@ export type TestTitleV2Response = {
   test_subjective: [];
   test_titles: TestTitle[];
 };
+
+export type Doubt = {
+  audio: string;
+  course_id: string;
+  datetime: string;
+  deleted: string;
+  doubt: string;
+  exam_id: string;
+  folder_courses: string;
+  id: string;
+  image: string;
+  is_read: string;
+  is_replied: string;
+  pdf: string;
+  status: string;
+  teacher_id: string;
+  teacher_name: string;
+  timestamp: string;
+  user_id: string;
+  user_name: string;
+};

@@ -236,7 +236,7 @@ export type FreeContent = {
   Title: string;
   app_status: string;
   chat_status: string;
-  concept: string;
+  concept: string | number;
   cookie_key: string;
   cookie_value: string;
   course_id: string;
@@ -254,12 +254,12 @@ export type FreeContent = {
   encrypted_links: any[];
   exam: string;
   file_link: string;
-  files_count: number;
+  files_count: number | string;
   filter: string;
   filter_name: string;
   folder_wise_course: number;
   free_flag: string;
-  hls_stream_type: number;
+  hls_stream_type: number | string;
   id: string;
   images_count: number;
   is_pdf2_encrypted: string;
@@ -268,10 +268,10 @@ export type FreeContent = {
   is_purchased: number;
   iv_string: string;
   links: any[];
-  live_quiz_id: string;
+  live_quiz_id: string | number;
   live_rewind_enable: string;
-  live_status: string;
-  live_type: string;
+  live_status: string | number;
+  live_type: string | number;
   livestream_links: any[];
   low_latency_enabled: boolean;
   material_type: string;
@@ -286,19 +286,19 @@ export type FreeContent = {
   pdf_encryption_version: string;
   pdf_link: string;
   pdf_link2: string;
-  quiz_count: number;
+  quiz_count: number | string;
   quiz_title_id: string;
   rec_domain: string;
   recording_hls: string;
-  recording_schedule: string;
-  recording_type: number;
+  recording_schedule: string | null;
+  recording_type: number | string;
   save_flag: string;
-  section: string;
+  section: string | number;
   sortingparam: string;
   special_course: string | null;
   strtotime: number;
-  subject: string;
-  tests_count: number;
+  subject: string | number;
+  tests_count: number | string;
   thumbnail: string;
   topic: string;
   uhs_version: string;
@@ -307,7 +307,7 @@ export type FreeContent = {
   video_player_lower_url: string;
   video_player_token: string;
   video_player_url: string;
-  videos_count: number;
+  videos_count: number | string;
   webdrm_links: any[];
   ytFlag: number;
   ytFlagWeb: number;
@@ -433,4 +433,36 @@ export type YoutubeClassStudyByTopic = {
   topic: string;
   ypdf_link: string;
   ypdf_link2: string;
+};
+
+export type CourseContentByLiveStatusResponse = {
+  data: {
+    live: FreeContent &
+      {
+        description: string;
+        event_date: string;
+        topic: number;
+        download_url_higher_version: string;
+        download_url_lower_version: string;
+        recording_hls: string;
+        save_flag: string;
+        parent_id: number;
+        rec_domain: string;
+      }[];
+    upcoming: FreeContent &
+      {
+        description: string;
+        event_date: string;
+        topic: number;
+        download_url_higher_version: string;
+        download_url_lower_version: string;
+        recording_hls: string;
+        save_flag: string;
+        parent_id: number;
+        rec_domain: string;
+      }[];
+  };
+  message: string;
+  status: number;
+  total: number;
 };

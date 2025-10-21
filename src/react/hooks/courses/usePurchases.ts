@@ -16,7 +16,7 @@ export function usePurchases({ userId, itemType }: UsePurchasesProps) {
       const res = await sdk.courses.getPurchasedCourses(userId, itemType);
       return res.data ?? [];
     },
-    staleTime: 30 * 60 * 1000,
+    staleTime: 5 * 60 * 1000, // 5 minutes
     retry: 1,
     enabled: !!sdk && !!userId && !!itemType,
   });

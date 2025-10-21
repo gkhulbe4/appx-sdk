@@ -1,6 +1,7 @@
 import type { AxiosInstance } from "axios";
 import type {
   CourseCategoryResponse,
+  CourseContentByLiveStatusResponse,
   CourseDetails,
   CourseListResponse,
   CurrencyRates,
@@ -301,6 +302,7 @@ export class CoursesApi {
     }
   }
 
+  // TODO: types missing
   async getLiveUpcomingFreeCourseClass(
     examId: string,
     start: string = "-1"
@@ -364,6 +366,87 @@ export class CoursesApi {
       return data;
     } catch (error) {
       this.handleError(error, "Failed to get youtube class study by topic");
+    }
+  }
+
+  async getCourseContentByLiveStatus(
+    courseId: string,
+    start: string = "-1",
+    liveStatus: string = "1,2"
+  ): Promise<CourseContentByLiveStatusResponse> {
+    try {
+      const { data } = await this.client.get(
+        `get/course_contents_by_live_status?course_id=${courseId}&start=${start}&live_status=${liveStatus}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get course content by live status");
+    }
+  }
+
+  // TODO: types missing
+  async getTeacherByCourse(courseId: string): Promise<{
+    data: any[];
+    message: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `get/getteacherbycourse?courseid=${courseId}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get teacher by course");
+    }
+  }
+
+  // TESTIMONIALS
+  async getApprovedTestimonials(
+    start: string,
+    itemType: string,
+    itemId: string
+  ): Promise<{
+    data: {
+      image: string;
+      name: string;
+      rating: string;
+      testimonial: string;
+    }[];
+    message: string;
+    status: number;
+    total: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `get/approved_testimonials?start=${start}&item_type=${itemType}&item_id=${itemId}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get approved testimonials");
+    }
+  }
+
+  async insertTestimonial(
+    userId: string,
+    rating: string,
+    testimonial: string,
+    itemType: string,
+    itemId: string
+  ): Promise<{ data: number; message: string; status: number }> {
+    try {
+      const formData = new FormData();
+      formData.append("user_id", userId);
+      formData.append("rating", rating);
+      formData.append("testimonial", testimonial);
+      formData.append("item_type", itemType);
+      formData.append("item_id", itemId);
+      const { data } = await this.client.post(
+        "post/insert_testimonial",
+        formData
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to insert testimonial");
     }
   }
 }

@@ -4,6 +4,7 @@ import {
   QuizTitle,
   QuizTitleResponse,
   QuizUniqueResponse,
+  SavedQuestion,
 } from "../types/quizTypes";
 
 export class QuizApi {
@@ -119,6 +120,36 @@ export class QuizApi {
       return data;
     } catch (error) {
       this.handleError(error, "Failed to get quiz rank");
+    }
+  }
+
+  async getSavedQuestions(): Promise<{
+    data: SavedQuestion[];
+    message: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(`Test_Series/getSavedQuestions`);
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to get saved questions");
+    }
+  }
+
+  async toggleSavedQuestion(
+    questionId: string,
+    testId: string,
+    testSeriesId: string
+  ): Promise<{
+    data: any[];
+    message: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(`Test_Series/toggleSaveQuestion`);
+      return data;
+    } catch (error) {
+      this.handleError(error, "Failed to toggle saved question");
     }
   }
 }

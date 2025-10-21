@@ -24,7 +24,7 @@ export function useFeaturedCourses() {
         isPaid: d.is_paid === 1,
       }));
     },
-    staleTime: 30 * 60 * 1000,
+    staleTime: 5 * 60 * 1000, // 5 minutes
     retry: 1,
     enabled: !!sdk,
   });

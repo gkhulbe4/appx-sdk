@@ -14,7 +14,7 @@ export function useWebSliderCourses() {
 
       return res.data.map((d) => d.image_link);
     },
-    staleTime: 30 * 60 * 1000,
+    staleTime: 5 * 60 * 1000, // 5 minutes
     retry: 1,
     enabled: !!sdk,
   });

@@ -39,11 +39,12 @@ export class VideoApi {
     courseId: string,
     videoId: string,
     ytFlag: string | "0",
-    folderWiseCourse: string
+    folderWiseCourse: string,
+    lc_app_api_url: string = ""
   ): Promise<VideoDetailsResponse> {
     try {
       const { data } = await this.client.get(
-        `get/fetchVideoDetailsById?course_id=${courseId}&video_id=${videoId}&ytflag=${ytFlag}&folder_wise_course=${folderWiseCourse}&linked_course_id=&lc_app_api_url=`
+        `get/fetchVideoDetailsById?course_id=${courseId}&video_id=${videoId}&ytflag=${ytFlag}&folder_wise_course=${folderWiseCourse}&linked_course_id=&lc_app_api_url=${lc_app_api_url}`
       );
       return data;
     } catch (error) {

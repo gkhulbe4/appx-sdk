@@ -1,32 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAppx } from "../../useAppx";
-import { VideoDetails } from "../../../types/videoTypes";
+import { CourseContentByLiveStatusResponse } from "../../../types/coursesTypes";
 
-export function usePreviousLiveVideos({
+export function useLiveVideos({
   courseId,
   start,
-  folderWiseCourse,
-  userId,
+  liveStatus,
 }: {
   courseId: string;
   start: string;
-  folderWiseCourse: string;
-  userId: string;
+  liveStatus: string;
 }) {
   const { sdk } = useAppx();
 
-  return useQuery<VideoDetails[], Error>({
-    queryKey: ["previousLiveVideos", courseId, start, folderWiseCourse, userId],
+  return useQuery<CourseContentByLiveStatusResponse["data"], Error>({
+    queryKey: ["liveVideos", courseId, start, liveStatus],
     queryFn: async () => {
       if (!sdk) throw new Error("SDK not initialized");
-      const res = await sdk.video.getPreviousLiveVideos(
+      const res = await sdk.courses.getCourseContentByLiveStatus(
         courseId,
         start,
-        folderWiseCourse,
-        userId
+        liveStatus
       );
       return res.data ?? [];
     },
+
     staleTime: 5 * 60 * 1000, // 5 minutes
     retry: 1,
     enabled: !!sdk,

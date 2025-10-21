@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import {
+  Doubt,
   SubjectsResponse,
   TestSeries,
   TestSeriesResponse,
@@ -89,6 +90,51 @@ export class TestApi {
     try {
     } catch (error) {
       this.handleError(error, "Fetching test series v2 failed");
+    }
+  }
+
+  async getDoubtExams(
+    courseId: string,
+    userId: string = "-1",
+    start: string = "-1"
+  ): Promise<{
+    data: {
+      datetime: string;
+      exam_name: string;
+      id: string;
+      status: string;
+    }[];
+    message: string;
+    msg: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `doubt/get_doubt_exams?courseid=${courseId}&user_id=${userId}&start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching doubt exams failed");
+    }
+  }
+
+  async getDoubtList(
+    courseId: string,
+    userId: string = "",
+    start: string = "-1"
+  ): Promise<{
+    data: Doubt[];
+    message: string;
+    msg: string;
+    status: number;
+  }> {
+    try {
+      const { data } = await this.client.get(
+        `doubt/get_doubt_list?course_id=${courseId}&user_id=${userId}&start=${start}`
+      );
+      return data;
+    } catch (error) {
+      this.handleError(error, "Fetching doubt list failed");
     }
   }
 }
