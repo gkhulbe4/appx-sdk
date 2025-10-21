@@ -9,6 +9,7 @@ export * from "./react/hooks/folder/useFolderExplorer";
 export * from "./react/hooks/courses/useFeaturedCourses";
 export * from "./react/hooks/courses/useWebSliderCourses";
 export * from "./react/hooks/folder/usePreviousLiveVideos";
+export * from "./react/hooks/folder/useLiveVideos";
 export * from "./react/hooks/tests/useAllTests";
 export * from "./react/hooks/quizzes/useQuizTitles";
 export * from "./react/hooks/courses/useRazorpayPayment";
