@@ -13,7 +13,10 @@ export interface FirebaseConfig {
 export const fetchFirebaseConfig = async (domain: string) => {
   try {
     const res = await axios.get(
-      `https://tempapi.classx.co.in/get/websiteconfig?domain=${domain}`,
+      `https://tempapi.classx.co.in/get/websiteconfig?domain=${domain.replace(
+        "https://",
+        ""
+      )}`,
       {
         headers: {
           "auth-key": "appxapi",
