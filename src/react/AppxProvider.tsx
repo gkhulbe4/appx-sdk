@@ -1,6 +1,13 @@
+// AppxProvider.tsx
 "use client";
 
-import { createContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useEffect,
+  useState,
+  useMemo,
+  type ReactNode,
+} from "react";
 import { AppxSdk } from "../node/init";
 import type { AppxContextType, CurrentUser } from "../types/appxTypes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -22,35 +29,41 @@ export function AppxProvider({
   const [firebaseSdkReady, setFirebaseSdkReady] = useState(false);
   const [queryClient] = useState(() => new QueryClient());
 
-  const sdk = new AppxSdk({
-    baseUrl,
-    domainUrl,
-    getToken: () => {
-      const currentUserDetails = localStorage.getItem("current_user");
-      if (!currentUserDetails) return null;
-      return JSON.parse(currentUserDetails).token;
-    },
-  });
+  const sdk = useMemo(
+    () =>
+      new AppxSdk({
+        baseUrl,
+        domainUrl,
+        getToken: () => {
+          const currentUserDetails = localStorage.getItem("current_user");
+          if (!currentUserDetails) return null;
+          return JSON.parse(currentUserDetails).token;
+        },
+      }),
+    [baseUrl, domainUrl]
+  );
 
   useEffect(() => {
     const initFirebase = async () => {
-      const currentUser = localStorage.getItem("current_user");
-      const token = currentUser ? JSON.parse(currentUser).token : "";
-      const userId = currentUser ? JSON.parse(currentUser).id : "";
-      const domain = process.env.NEXT_PUBLIC_DOMAIN_URL!;
-
-      console.log("Initializing Firebase with:", { domain });
-
-      await sdk.initFirebaseForDomain(domain);
-      console.log("Firebase initialized successfully");
-
-      setFirebaseSdkReady(true);
+      try {
+        await sdk.waitForFirebase();
+        console.log("Firebase initialized successfully");
+        setFirebaseSdkReady(true);
+      } catch (error) {
+        console.error("Firebase initialization failed:", error);
+      }
     };
 
-    initFirebase().catch(console.error);
+    initFirebase();
   }, [sdk]);
 
-  if (!firebaseSdkReady) return <div>Loading...</div>;
+  if (!firebaseSdkReady) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div>Loading Firebase...</div>
+      </div>
+    );
+  }
 
   return (
     <AppxContext.Provider value={{ sdk, user, setUser }}>

@@ -1,3 +1,4 @@
+// init.ts
 import { UserApi } from "../user";
 import { CoursesApi } from "../courses";
 import { VideoApi } from "../video";
@@ -7,12 +8,9 @@ import { RazorpayApi } from "../razorpay";
 import { StudyMaterialApi } from "../studyMaterial";
 import { createClient } from "./client";
 import { Database } from "firebase/database";
-import { initFirebase } from "../firebase/initFirebase";
-import {
-  fetchFirebaseConfig,
-  type FirebaseConfig,
-} from "../firebase/firebaseConfig";
 import type { AppxSdkOptions } from "../../types/appxTypes";
+import { setupFirebase } from "../firebase/setupFirebase";
+import { FirebaseApp } from "firebase/app";
 
 export class AppxSdk {
   public user: UserApi;
@@ -22,8 +20,11 @@ export class AppxSdk {
   public quiz: QuizApi;
   public razorpay: RazorpayApi;
   public studyMaterial: StudyMaterialApi;
+
+  public firebaseApp?: FirebaseApp;
   public firebaseDb?: Database;
-  public domainUrl: string;
+
+  private firebaseInitPromise: Promise<void>;
 
   constructor(options: AppxSdkOptions) {
     const client = createClient(options.baseUrl, options.getToken);
@@ -36,30 +37,25 @@ export class AppxSdk {
     this.razorpay = new RazorpayApi(client);
     this.studyMaterial = new StudyMaterialApi(client);
 
-    this.domainUrl = options.domainUrl;
-
-    this.initFirebaseForDomain(this.domainUrl).catch((err) =>
-      console.error("Firebase init failed:", err)
-    );
+    this.firebaseInitPromise = this.initFirebase(options.domainUrl);
   }
 
-  async fetchFirebaseConfig(domain: string): Promise<FirebaseConfig> {
-    return await fetchFirebaseConfig(domain);
+  private async initFirebase(domain: string): Promise<void> {
+    try {
+      const { app, db } = await setupFirebase(domain);
+      this.firebaseApp = app;
+      this.firebaseDb = db;
+    } catch (err) {
+      console.error("Firebase initialization failed:", err);
+      throw err;
+    }
   }
 
-  async initFirebaseWithConfig(config: FirebaseConfig): Promise<Database> {
-    this.firebaseDb = initFirebase(config);
-    console.log("Firebase initialized successfully");
-    return this.firebaseDb;
+  public async waitForFirebase(): Promise<void> {
+    await this.firebaseInitPromise;
   }
 
-  async initFirebaseForDomain(domain: string): Promise<Database> {
-    if (!domain)
-      throw new Error("Domain is required for fetching Firebase config");
-
-    const config = await this.fetchFirebaseConfig(domain);
-    if (!config) throw new Error("Firebase config not returned from API");
-
-    return await this.initFirebaseWithConfig(config);
+  public isFirebaseReady(): boolean {
+    return this.firebaseApp !== undefined && this.firebaseDb !== undefined;
   }
 }
