@@ -1,4 +1,3 @@
-// init.ts
 import { UserApi } from "../user";
 import { CoursesApi } from "../courses";
 import { VideoApi } from "../video";
@@ -7,10 +6,8 @@ import { QuizApi } from "../quiz";
 import { RazorpayApi } from "../razorpay";
 import { StudyMaterialApi } from "../studyMaterial";
 import { createClient } from "./client";
-import { Database } from "firebase/database";
 import type { AppxSdkOptions } from "../../types/appxTypes";
-import { setupFirebase } from "../firebase/setupFirebase";
-import { FirebaseApp } from "firebase/app";
+import { Firebase } from "../firebase/firebase";
 
 export class AppxSdk {
   public user: UserApi;
@@ -21,10 +18,7 @@ export class AppxSdk {
   public razorpay: RazorpayApi;
   public studyMaterial: StudyMaterialApi;
 
-  public firebaseApp?: FirebaseApp;
-  public firebaseDb?: Database;
-
-  private firebaseInitPromise: Promise<void>;
+  public firebase?: Firebase;
 
   constructor(options: AppxSdkOptions) {
     const client = createClient(options.baseUrl, options.getToken);
@@ -36,26 +30,12 @@ export class AppxSdk {
     this.quiz = new QuizApi(client);
     this.razorpay = new RazorpayApi(client);
     this.studyMaterial = new StudyMaterialApi(client);
-
-    this.firebaseInitPromise = this.initFirebase(options.domainUrl);
+    this.firebase = new Firebase(options.domainUrl);
   }
 
-  private async initFirebase(domain: string): Promise<void> {
-    try {
-      const { app, db } = await setupFirebase(domain);
-      this.firebaseApp = app;
-      this.firebaseDb = db;
-    } catch (err) {
-      console.error("Firebase initialization failed:", err);
-      throw err;
+  public async waitForFirebase() {
+    if (this.firebase) {
+      await this.firebase.waitForReady();
     }
-  }
-
-  public async waitForFirebase(): Promise<void> {
-    await this.firebaseInitPromise;
-  }
-
-  public isFirebaseReady(): boolean {
-    return this.firebaseApp !== undefined && this.firebaseDb !== undefined;
   }
 }

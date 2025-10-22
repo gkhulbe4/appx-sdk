@@ -1,4 +1,3 @@
-// AppxProvider.tsx
 "use client";
 
 import {
@@ -46,8 +45,9 @@ export function AppxProvider({
   useEffect(() => {
     const initFirebase = async () => {
       try {
-        await sdk.waitForFirebase();
-        console.log("Firebase initialized successfully");
+        if (sdk.firebase) {
+          await sdk.firebase.waitForReady();
+        }
         setFirebaseSdkReady(true);
       } catch (error) {
         console.error("Firebase initialization failed:", error);
@@ -59,7 +59,7 @@ export function AppxProvider({
 
   if (!firebaseSdkReady) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-[#060606]">
         <div>Loading Firebase...</div>
       </div>
     );
