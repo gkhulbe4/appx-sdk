@@ -24,7 +24,7 @@ export const fetchFirebaseConfig = async (domain: string) => {
       }
     );
 
-    return res.data.firebaseConfig as FirebaseConfig;
+    return res.data.data as FirebaseConfig;
   } catch (err) {
     console.error("Failed to fetch Firebase config:", err);
     throw err;
