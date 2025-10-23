@@ -60,7 +60,7 @@ export function AppxProvider({
   if (!firebaseSdkReady) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#060606]">
-        <div>Loading Firebase...</div>
+        {/* <div>Loading Firebase...</div> */}
       </div>
     );
   }

@@ -7,6 +7,7 @@ import {
   onChildAdded,
   query,
   limitToLast,
+  get,
 } from "firebase/database";
 import { fetchFirebaseConfig, FirebaseConfig } from "./firebaseConfig";
 
@@ -41,7 +42,7 @@ export class Firebase {
     return !!this.app && !!this.db;
   }
 
-  public listenToChat(
+  listenToChat(
     streamId: string,
     callback: (msg: {
       id: string;
@@ -50,11 +51,8 @@ export class Firebase {
       timestamp: number;
     }) => void
   ) {
-    if (!this.db) throw new Error("Firebase not ready");
-    const chatRef = ref(this.db, `/data/CourseRoomChat/${streamId}`);
-    const recentQuery = query(chatRef, limitToLast(50));
-
-    return onChildAdded(recentQuery, (snapshot) => {
+    const chatRef = ref(this.db!, `data/CourseRoomChat/${streamId}`);
+    return onChildAdded(chatRef, (snapshot) => {
       const msg = snapshot.val();
       callback({
         id: snapshot.key || Date.now().toString(),
@@ -63,6 +61,23 @@ export class Firebase {
         timestamp: msg.timestamp,
       });
     });
+  }
+
+  public async getAllLiveChats(streamId: string) {
+    const chatRef = ref(this.db!, `data/CourseRoomChat/${streamId}`);
+    const snapshot = await get(chatRef);
+
+    if (!snapshot.exists()) return [];
+    const data = snapshot.val();
+
+    return Object.entries(data)
+      .map(([id, msg]: any) => ({
+        id,
+        text: msg.text,
+        sender: msg.sender,
+        timestamp: msg.timestamp,
+      }))
+      .sort((a, b) => a.timestamp - b.timestamp);
   }
 
   public async sendMessage(streamId: string, text: string, sender: string) {
