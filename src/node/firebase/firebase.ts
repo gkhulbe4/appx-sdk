@@ -8,8 +8,14 @@ import {
   query,
   limitToLast,
   get,
+  onValue,
+  off,
+  onChildRemoved,
+  onChildChanged,
+  Unsubscribe,
 } from "firebase/database";
 import { fetchFirebaseConfig, FirebaseConfig } from "./firebaseConfig";
+import { FormattedRawMessage, RawMessage } from "../../types/liveClassTypes";
 
 export class Firebase {
   public app?: FirebaseApp;
@@ -42,47 +48,134 @@ export class Firebase {
     return !!this.app && !!this.db;
   }
 
-  listenToChat(
+  // LIVE CHAT
+  listenToLiveChat(
     streamId: string,
-    callback: (msg: {
-      id: string;
-      text: string;
-      sender: string;
-      timestamp: number;
-    }) => void
+    onMessageAdded: (msg: FormattedRawMessage) => void,
+    onMessageRemoved: (id: string) => void,
+    onMessageChanged: (id: string) => void,
+    onError?: (err: Error) => void
   ) {
-    const chatRef = ref(this.db!, `data/CourseRoomChat/${streamId}`);
-    return onChildAdded(chatRef, (snapshot) => {
-      const msg = snapshot.val();
-      callback({
-        id: snapshot.key || Date.now().toString(),
-        text: msg.text,
-        sender: msg.sender,
-        timestamp: msg.timestamp,
-      });
+    const chatRef = ref(this.db!, `youtubedata/${streamId}`);
+
+    const incomingMessage: Unsubscribe = onChildAdded(
+      chatRef,
+      (snapshot) => {
+        const msg = snapshot.val();
+        onMessageAdded({
+          id: snapshot.key as string,
+          pinstatus: msg.pinstatus,
+          userComment: msg.userComment,
+          userName: msg.userName,
+          userId: msg.userId,
+          userTime: msg.userTime,
+          postedAt: msg.postedAt,
+          userFlag: msg.userFlag || undefined,
+        });
+      },
+      onError
+    );
+
+    const messageRemoved: Unsubscribe = onChildRemoved(
+      chatRef,
+      (snapshot) => {
+        onMessageRemoved(snapshot.key as string);
+      },
+      onError
+    );
+
+    const messageChanged: Unsubscribe = onChildChanged(
+      chatRef,
+      (snapshot) => {
+        onMessageChanged(snapshot.key as string);
+      },
+      onError
+    );
+
+    return () => {
+      incomingMessage();
+      messageRemoved();
+      messageChanged();
+    };
+  }
+
+  public async getAllLiveChats(
+    streamId: string
+  ): Promise<FormattedRawMessage[]> {
+    const chatRef = ref(this.db!, `youtubedata/${streamId}`);
+    const snapshot = await get(chatRef);
+    // console.log("SNAPSHOT", snapshot);
+    if (!snapshot.exists()) return [];
+    const data = snapshot.val();
+    // console.log("CHAT DATA:", data);
+
+    const formattedChatData: FormattedRawMessage[] = Object.entries(data).map(
+      ([key, value]) => {
+        return {
+          id: key as string,
+          ...(value as RawMessage),
+        };
+      }
+    );
+
+    return formattedChatData;
+  }
+
+  public async sendMessage(streamId: string, message: RawMessage) {
+    if (!this.db) throw new Error("Firebase not ready");
+    const chatRef = ref(this.db, `youtubedata/${streamId}`);
+    await push(chatRef, {
+      pinstatus: message.pinstatus,
+      userComment: message.userComment,
+      userName: message.userName,
+      userId: message.userId,
+      userTime: message.userTime,
+      postedAt: message.postedAt,
     });
   }
 
-  public async getAllLiveChats(streamId: string) {
-    const chatRef = ref(this.db!, `data/CourseRoomChat/${streamId}`);
-    const snapshot = await get(chatRef);
+  // CHAT SWITCHER
+  public listenToChatSwitcher(
+    streamId: string,
+    callback: (isEnabled: boolean) => void
+  ) {
+    const chatSwitcherRef = ref(this.db!, `chat_switcher/${streamId}`);
 
-    if (!snapshot.exists()) return [];
-    const data = snapshot.val();
+    const unsubscribe: Unsubscribe = onValue(chatSwitcherRef, (snapshot) => {
+      const val = snapshot.val();
+      callback(val === true);
+    });
 
-    return Object.entries(data)
-      .map(([id, msg]: any) => ({
-        id,
-        text: msg.text,
-        sender: msg.sender,
-        timestamp: msg.timestamp,
-      }))
-      .sort((a, b) => a.timestamp - b.timestamp);
+    return unsubscribe;
   }
 
-  public async sendMessage(streamId: string, text: string, sender: string) {
-    if (!this.db) throw new Error("Firebase not ready");
-    const chatRef = ref(this.db, `chats/${streamId}`);
-    await push(chatRef, { text, sender, timestamp: Date.now() });
+  // LIVE CHAT SWITCHER
+  public listenToLiveChatSwitcher(
+    streamId: string,
+    callback: (isLiveChatEveryone: number) => void
+  ) {
+    const liveChatSwitcherRef = ref(
+      this.db!,
+      `data/live_chat_switcher/${streamId}`
+    );
+
+    const unsubscribe: Unsubscribe = onValue(
+      liveChatSwitcherRef,
+      (snapshot) => {
+        const val = snapshot.val();
+        callback(val);
+      }
+    );
+
+    return unsubscribe;
+  }
+
+  // HAND RAISE
+  public async sendHandRaise(
+    streamId: string,
+    userId: string,
+    userName: string
+  ) {
+    const handRaiseRef = ref(this.db!, `hand_raise/${streamId}`);
   }
 }

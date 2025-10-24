@@ -24,3 +24,4 @@ export * from "./types/testTypes";
 export * from "./types/quizTypes";
 export * from "./types/razorTypes";
 export * from "./types/studyMaterialTypes";
+export * from "./types/liveClassTypes";
